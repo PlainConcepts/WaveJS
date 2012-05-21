@@ -8,16 +8,48 @@
  * http://docs.jquery.com/
  */
 
+/**
+ * Constans to generate colors strings.
+ * @type {String}
+ */
 var rgba = 'rgba(',
     rgb = 'rgb(',
     comma = ',',
     close = ')';
 
+/**
+ * Create an instance of Matrix 4x4
+ * @return {Matrix}
+ * @this {Matrix}
+ * @constructor
+ */
 function Matrix() {
     this.position = arguments;
+    /**
+     * M11 = position[0]
+     * M12 = position[1]
+     * M13 = position[2]
+     * M14 = position[3]
+     * M21 = position[4]
+     * M22 = position[5]
+     * M23 = position[6]
+     * M24 = position[7]
+     * M31 = position[8]
+     * M32 = position[9]
+     * M33 = position[10]
+     * M34 = position[11]
+     * M41 = position[12]
+     * M42 = position[13]
+     * M43 = position[14]
+     * M44 = position[15]
+     */
     return this;
 }
 
+/**
+ * Assing Identity Matrix to itself
+ * @this {Matrix}
+ */
 Matrix.prototype.MatrixIdentity = function () {
     var position = this.position;
     position[0] = 1;
@@ -38,6 +70,12 @@ Matrix.prototype.MatrixIdentity = function () {
     position[15] = 1;
 };
 
+/**
+ * Create a translation matrix.
+ * @param {Array(3)} vector3 The new position.
+ * @this {Matrix}
+ * @constructor
+ */
 Matrix.prototype.CreateTranslation = function (vector3) {
     var position = this.position;
     position[0] = 1;
@@ -58,6 +96,14 @@ Matrix.prototype.CreateTranslation = function (vector3) {
     position[15] = 1;
 };
 
+/**
+ * Create Scale Matrix
+ * @param {number} xScale The scale in x-axis
+ * @param {number} yScale The scale in y-axis
+ * @param {number} zScale The scale in z-axis
+ * @this {Matrix}
+ * @constructor
+ */
 Matrix.prototype.CreateScale = function (xScale, yScale, zScale) {
     var position = this.position;
     position[0] = xScale;
@@ -78,6 +124,12 @@ Matrix.prototype.CreateScale = function (xScale, yScale, zScale) {
     position[15] = 1;
 };
 
+/**
+ * Create Rotation Matrix in X-axis
+ * @param {number} radians The rotations in radians
+ * @this {Matrix}
+ * @constructor
+ */
 Matrix.prototype.CreateRotationX = function (radians) {
     var num2 = Math.cos(radians);
     var num = Math.sin(radians);
@@ -100,6 +152,12 @@ Matrix.prototype.CreateRotationX = function (radians) {
     position[15] = 1;
 };
 
+/**
+ * Create Rotation Matrix in Y-axis
+ * @param {number} radians The rotations in radians
+ * @this {Matrix}
+ * @constructor
+ */
 Matrix.prototype.CreateRotationY = function (radians) {
     var num2 = Math.cos(radians);
     var num = Math.sin(radians);
@@ -122,6 +180,12 @@ Matrix.prototype.CreateRotationY = function (radians) {
     position[15] = 1;
 };
 
+/**
+ * Create Rotation Matrix in Z-axis
+ * @param {number} radians The rotations in radians
+ * @this {Matrix}
+ * @constructor
+ */
 Matrix.prototype.CreateRotationZ = function (radians) {
     var num2 = Math.cos(radians);
     var num = Math.sin(radians);
@@ -144,6 +208,13 @@ Matrix.prototype.CreateRotationZ = function (radians) {
     position[15] = 1;
 };
 
+/**
+ * Create a Shadow Matrix
+ * @param {Array(3)} plane Plane where Shadow will be projected
+ * @param {Array(3)} light Light position
+ * @param {number} d distance to plane.
+ * @return {Matrix}
+ */
 function CreateShadowMatrix(plane, light, d) {
     var matrix = new Matrix();
     var num = ((plane[0] * light[0]) + (plane[1] * light[1])) + (plane[2] * light[2]);
@@ -171,6 +242,14 @@ function CreateShadowMatrix(plane, light, d) {
     return matrix;
 }
 
+/**
+ * Genearte Perspective Fiel Of View Matrix.
+ * @param {number} fieldOfView
+ * @param {number} aspectRatio
+ * @param {number} nearPlaneDistance
+ * @param {number} farPlaneDistance
+ * @return {Matrix}
+ */
 function CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance) {
     var matrix = new Matrix();
     var num = 1 / Math.tan(fieldOfView * 0.5);
@@ -188,6 +267,14 @@ function CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistanc
     return matrix;
 }
 
+/**
+ * Create View Matrix for the scene.
+ * @param {Array(3)} cameraPosition Array with the camera position
+ * @param {Array(3)} cameraTarget Array with the target position
+ * @param {Array(3)} cameraUpVector Array with the camera's vector up
+ * @return {Matrix}
+ * @constructor
+ */
 function CreateLookAt(cameraPosition, cameraTarget, cameraUpVector) {
     var matrix = new Matrix();
     var vector = SubstractV3(cameraPosition, cameraTarget);
@@ -215,6 +302,11 @@ function CreateLookAt(cameraPosition, cameraTarget, cameraUpVector) {
     return matrix;
 }
 
+/**
+ * Invert the Matrix itself
+ * @this {Matrix}
+ * @constructor
+ */
 Matrix.prototype.Invert = function () {
     var position = this.position;
     var num5 = position[0];
@@ -274,6 +366,11 @@ Matrix.prototype.Invert = function () {
     position[15] = (((num5 * num27) - (num4 * num25)) + (num3 * num24)) * num;
 };
 
+/**
+ * Create a matrix (4x4) from a Quaternion.
+ * @param {Quaternion} quaternion
+ * @return {Matrix}
+ */
 function CreateFromQuaternion(quaternion) {
     var matrix = new Matrix();
     var num9 = quaternion[0] * quaternion[0];
@@ -305,6 +402,12 @@ function CreateFromQuaternion(quaternion) {
     return matrix;
 }
 
+/**
+ * Multiply two matrixs
+ * @param {Matrix} matrix1
+ * @param {Matrix} matrix2
+ * @return {Matrix}
+ */
 function Multiply(matrix1, matrix2) {
     var matrix = new Matrix();
     var position = matrix.position;
@@ -329,6 +432,14 @@ function Multiply(matrix1, matrix2) {
     return matrix;
 }
 
+/**
+ * Convert a 3D point in a projected 2D point.
+ * @param {Array(4)} pos 3D point to Convert.
+ * @param {Matrix} worldviewproj World view projection matrix
+ * @param {number} screenWidth Screen width
+ * @param {number} screenHeight Screen Height
+ * @return {Array(2)}
+ */
 function Convert(pos, worldviewproj, screenWidth, screenHeight) {
     var vx = pos[0];
     var vy = pos[1];
@@ -347,6 +458,10 @@ function Convert(pos, worldviewproj, screenWidth, screenHeight) {
     return [screenWidth * ((x / w) + 1.0) / 2.0, screenHeight * (1.0 - (((y / w) + 1.0) / 2.0))];
 }
 
+/**
+ * Normalize a vector
+ * @this {Array}
+ */
 Array.prototype.Normalize = function () {
     if (this.length === 2) {
         NormalizeVector2(this);
@@ -359,6 +474,10 @@ Array.prototype.Normalize = function () {
     }
 };
 
+/**
+ * Normalize a vector2
+ * @param {Array(2)} value
+ */
 function NormalizeVector2(value) {
     var num2 = (value[0] * value[0]) + (value[1] * value[1]);
     var num = 1 / (Math.sqrt(num2));
@@ -366,6 +485,10 @@ function NormalizeVector2(value) {
     value[1] *= num;
 }
 
+/**
+ * Normalize a vector3
+ * @param value
+ */
 function NormalizeVector3(value) {
     var x = value[0];
     var y = value[1];
@@ -378,6 +501,10 @@ function NormalizeVector3(value) {
     value[2] = z * num;
 }
 
+/**
+ * Normalize a vector4
+ * @param value
+ */
 function NormalizeVector4(value) {
     var x = value[0];
     var y = value[1];
@@ -392,12 +519,22 @@ function NormalizeVector4(value) {
     value[3] = w * num;
 }
 
+/**
+ * Invert an array
+ * @this {Array(3)};
+ * @constructor
+ */
 Array.prototype.Invert = function () {
     this[0] = -this[0];
     this[1] = -this[1];
     this[2] = -this[2];
 };
 
+/**
+ * Divide each element of the array(4) by divider
+ * @param {number} divider
+ * @this {Array}
+ */
 Array.prototype.Divide = function (divider) {
     var num = 1 / divider;
     this[0] = this[0] * num;
@@ -406,18 +543,37 @@ Array.prototype.Divide = function (divider) {
     this[3] = this[3] * num;
 };
 
+/**
+ * Adds two arrays.
+ * @param {Array(3)}vector1
+ * @param {Array(3)}vector2
+ * @return {Array(3)}
+ */
 function PlusV3(vector1, vector2) {
     return [vector1[0] + vector2[0],
         vector1[1] + vector2[1],
         vector1[2] + vector2[2]];
 }
 
+/**
+ * Substract two arrays
+ * @param {Array(3)}vector1
+ * @param {Array(3)}vector2
+ * @return {Array}
+ * @constructor
+ */
 function SubstractV3(vector1, vector2) {
     return [vector1[0] - vector2[0],
         vector1[1] - vector2[1],
         vector1[2] - vector2[2]];
 }
 
+/**
+ * Cross product for two Array(3)
+ * @param {Array(3)} vector1
+ * @param {Array(3)} vector2
+ * @return {Array}
+ */
 function CrossV3(vector1, vector2) {
     var x = (vector1[1] * vector2[2]) - (vector1[2] * vector2[1]);
     var y = (vector1[2] * vector2[0]) - (vector1[0] * vector2[2]);
@@ -425,12 +581,25 @@ function CrossV3(vector1, vector2) {
     return [x, y, z];
 }
 
+/**
+ * Dot product for two Array(3)
+ * @param {Array(3)} vector1
+ * @param {Array(3)} vector2
+ * @return {number}
+ * @constructor
+ */
 function DotV3(vector1, vector2) {
     return (vector1[0] * vector2[0]) +
         (vector1[1] * vector2[1]) +
         (vector1[2] * vector2[2]);
 }
 
+/**
+ * Transform a 3D point respect a Transformation Matrix
+ * @param {Array(3)} position Point Position
+ * @param {Matrix} matrix Transformation Matrix.
+ * @return {Array}
+ */
 function TransformV3Matrix(position, matrix) {
     var p = matrix.position;
     var x = position[0];
@@ -439,9 +608,6 @@ function TransformV3Matrix(position, matrix) {
     var num3 = (((x * p[0]) + (y * p[4])) + (z * p[8])) + p[12];
     var num2 = (((x * p[1]) + (y * p[5])) + (z * p[9])) + p[13];
     var num = (((x * p[2]) + (y * p[6])) + (z * p[10])) + p[14];
-    //vector[0] = num3;
-    //vector[1] = num2;
-    //vector[2] = num;
     return [num3, num2, num];
 }
 
@@ -665,7 +831,7 @@ Camera.prototype.GetPosition = function () {
 };
 
 Camera.prototype.ChangePerspectiveFieldOfView = function (fieldOfView) {
-    this.projection = fieldOfView
+    this.projection = fieldOfView;
     this.viewproj = Multiply(this.view, this.projection);
 };
 
@@ -749,7 +915,6 @@ Camera.prototype.RotateCamera = function (anglex, angley, radio) {
  * http://docs.jquery.com/
  */
 
-var EPSILON = 1.401298E-45;
 function SphereCamera(width, height) {
     this.cameraPosition = [0, 0, 15];
     this.cameraTarget = [0, 0, 0];
@@ -1285,7 +1450,7 @@ function SortModels(preSortModels) {
     if (preSortModels.length <= 1) {
         return preSortModels;
     }
-    var pivot = Math.floor(preSortModels / 2)
+    var pivot = Math.floor(preSortModels / 2);
     var less = [];
     var greater = [];
     var pivotElem = preSortModels.splice(pivot, 1);
