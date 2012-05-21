@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript" src="../js/lib/requestAnimationFrame.js"></script>
+    <script type="text/javascript" src="../js/lib/waveEngine.js"></script>
+    <script type="text/javascript" src="../models/geosphere01.js"></script>
+    <script type="text/javascript" src="../models/plane01.js"></script>
+    <script type="text/javascript">
+        function OnLoad() {
+            var canvas = document.getElementById("canvas");
+            var scene = new Scene(canvas);
+            var camera = new Camera(canvas.width, canvas.height);
+            scene.AddCamera(camera);
+            camera.ChangeCameraPosition([0,150, 150]);
+            var total = document.getElementById("total");
+            scene.ChangeLight(150, 150, 150);
+            geosphere01.ChangeColor([0, 28, 123, 1], [0, 28, 123, 1]);
+            geosphere01.hasIllumination = true;
+            geosphere01.hasShadow = true;
+            geosphere01.ChangeScale(7, 7,7);
+            geosphere01.ChangePosition(0, 50, 0);
+            plane01.ChangeColor([123, 123, 123, 1], [0, 0, 0, 1]);
+            plane01.colors = "red";
+            plane01.hasShadow = false;
+            scene.AddModel(plane01);
+            scene.AddModel(geosphere01);
+            
+            window.requestAnimationFrame(animate);
+            var rotY = 0;
+            function animate() {
+                var date = new Date();
+                scene.models[1].ChangeRotation(0, rotY, 0);
+                Draw();
+                rotY -= 0.1;
+                total.textContent = new Date() - date;
+                window.requestAnimationFrame(animate);
+            }
+
+            var drawType = scene.SOLID;
+
+            function Draw() {
+                var date = new Date();
+                switch (drawType) {
+                    case scene.WIRE:
+                        scene.Render(scene.WIRE);
+                        break;
+                    case scene.SOLID:
+                        scene.Render(scene.SOLID);
+                        break;
+                    case scene.POINTS:
+                        scene.Render(scene.POINTS);
+                        break;
+                }
+                total.textContent = new Date() - date;
+            }
+        }
+    </script>
+</head>
+<body onload="OnLoad();">
+    <canvas width="998" height="498" id="canvas">Canvas not supported. </canvas>
+    <!--<svg width="998" height="498" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100%" height="100%" style="fill: white" />
+        <g id="origin" transform="translate(0,0)" fill="#f00">
+        </g>
+    </svg>-->
+    <p id="total"></p>
+</body>
+</html>

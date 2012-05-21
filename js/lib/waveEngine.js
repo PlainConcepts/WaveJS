@@ -1,10 +1,3 @@
-//function Color(r, g, b, a) {
-//    this.r = r;
-//    this.g = g;
-//    this.b = b;
-//    this.a = a;
-//}
-
 /*
  * 3D ENGINE - MATRIX
  *
@@ -43,7 +36,7 @@ Matrix.prototype.MatrixIdentity = function () {
     position[13] = 0;
     position[14] = 0;
     position[15] = 1;
-}
+};
 
 Matrix.prototype.CreateTranslation = function (vector3) {
     var position = this.position;
@@ -63,30 +56,27 @@ Matrix.prototype.CreateTranslation = function (vector3) {
     position[13] = vector3[1];
     position[14] = vector3[2];
     position[15] = 1;
-}
+};
 
 Matrix.prototype.CreateScale = function (xScale, yScale, zScale) {
-    var num3 = xScale;
-    var num2 = yScale;
-    var num = zScale;
     var position = this.position;
-    position[0] = num3;
+    position[0] = xScale;
     position[1] = 0;
     position[2] = 0;
     position[3] = 0;
     position[4] = 0;
-    position[5] = num2;
+    position[5] = yScale;
     position[6] = 0;
     position[7] = 0;
     position[8] = 0;
     position[9] = 0;
-    position[10] = num;
+    position[10] = zScale;
     position[11] = 0;
     position[12] = 0;
     position[13] = 0;
     position[14] = 0;
     position[15] = 1;
-}
+};
 
 Matrix.prototype.CreateRotationX = function (radians) {
     var num2 = Math.cos(radians);
@@ -108,7 +98,7 @@ Matrix.prototype.CreateRotationX = function (radians) {
     position[13] = 0;
     position[14] = 0;
     position[15] = 1;
-}
+};
 
 Matrix.prototype.CreateRotationY = function (radians) {
     var num2 = Math.cos(radians);
@@ -130,7 +120,7 @@ Matrix.prototype.CreateRotationY = function (radians) {
     position[13] = 0;
     position[14] = 0;
     position[15] = 1;
-}
+};
 
 Matrix.prototype.CreateRotationZ = function (radians) {
     var num2 = Math.cos(radians);
@@ -152,7 +142,7 @@ Matrix.prototype.CreateRotationZ = function (radians) {
     position[13] = 0;
     position[14] = 0;
     position[15] = 1;
-}
+};
 
 function CreateShadowMatrix(plane, light, d) {
     var matrix = new Matrix();
@@ -163,20 +153,20 @@ function CreateShadowMatrix(plane, light, d) {
     var num2 = -d;
     var position = matrix.position;
     position[0] = (num5 * light[0]) + num;
-    position[1] = num4 * light[0];
-    position[2] = num3 * light[0];
-    position[3] = num2 * light[0];
-    position[4] = num5 * light[1];
+    position[1] = num5 * light[1];
+    position[2] = num5 * light[2];
+    position[3] = 0;
+    position[4] = num4 * light[0];
     position[5] = (num4 * light[1]) + num;
-    position[6] = num3 * light[1];
-    position[7] = num2 * light[1];
-    position[8] = num5 * light[2];
-    position[9] = num4 * light[2];
+    position[6] = num4 * light[2];
+    position[7] = 0;
+    position[8] = num3 * light[0];
+    position[9] = num3 * light[1];
     position[10] = (num3 * light[2]) + num;
-    position[11] = num2 * light[2];
-    position[12] = 0;
-    position[13] = 0;
-    position[14] = 0;
+    position[11] = 0;
+    position[12] = num2 * light[0];
+    position[13] = num2 * light[1];
+    position[14] = num2 * light[2];
     position[15] = num;
     return matrix;
 }
@@ -282,7 +272,7 @@ Matrix.prototype.Invert = function () {
     position[7] = (((num5 * num29) - (num3 * num26)) + (num2 * num25)) * num;
     position[11] = -(((num5 * num28) - (num4 * num26)) + (num2 * num24)) * num;
     position[15] = (((num5 * num27) - (num4 * num25)) + (num3 * num24)) * num;
-}
+};
 
 function CreateFromQuaternion(quaternion) {
     var matrix = new Matrix();
@@ -367,7 +357,7 @@ Array.prototype.Normalize = function () {
     else if (this.length === 4) {
         NormalizeVector4(this);
     }
-}
+};
 
 function NormalizeVector2(value) {
     var num2 = (value[0] * value[0]) + (value[1] * value[1]);
@@ -406,15 +396,15 @@ Array.prototype.Invert = function () {
     this[0] = -this[0];
     this[1] = -this[1];
     this[2] = -this[2];
-}
+};
 
 Array.prototype.Divide = function (divider) {
     var num = 1 / divider;
     this[0] = this[0] * num;
     this[1] = this[1] * num;
     this[2] = this[2] * num;
-    this[3] = this[3] * num; ;
-}
+    this[3] = this[3] * num;
+};
 
 function PlusV3(vector1, vector2) {
     return [vector1[0] + vector2[0],
@@ -458,7 +448,7 @@ function TransformV3Matrix(position, matrix) {
 
 
 function TransformV4Matrix(vector, matrix) {
-    var vx = vector[0]
+    var vx = vector[0];
     var vy = vector[1];
     var vz = vector[2];
     var vw = vector[3];
@@ -617,7 +607,7 @@ BoundingBox.prototype.Intersects = function (ray) {
         }
     }
     return num;
-}
+};
 
 BoundingBox.prototype.GetConers = function () {
     var min = this.min;
@@ -630,7 +620,7 @@ BoundingBox.prototype.GetConers = function () {
         [max[0], max[1], min[2], 1],
         [max[0], min[1], min[2], 1],
         [min[0], min[1], min[2], 1]];
-}
+};
 
 /*
  * 3D ENGINE - RAY
@@ -672,55 +662,55 @@ function Camera(width, height) {
 
 Camera.prototype.GetPosition = function () {
     return this.cameraPosition;
-}
+};
 
 Camera.prototype.ChangePerspectiveFieldOfView = function (fieldOfView) {
     this.projection = fieldOfView
     this.viewproj = Multiply(this.view, this.projection);
-}
+};
 
 Camera.prototype.ChangeAspectRatio = function (aspectRatio) {
     this.aspectRatio = aspectRatio;
     this.projection = CreatePerspectiveFieldOfView(Math.PI / 4, this.aspectRatio, 1, 1000);
     this.viewproj = Multiply(this.view, this.projection);
-}
+};
 
 Camera.prototype.ChangePerspectiveFieldOfView = function (fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance) {
     this.projection = CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance);
     this.viewproj = Multiply(this.view, this.projection);
-}
+};
 
 Camera.prototype.ChangeCameraPosition = function (position) {
     this.cameraPosition = position;
     this.ChangeViewProj();
-}
+};
 
 Camera.prototype.ChangeCameraTarget = function (target) {
     this.cameraTarget = target;
     this.ChangeViewProj();
-}
+};
 
 Camera.prototype.ChangeCameraUpVector = function (upVector) {
     this.cameraUpVector = upVector;
     this.ChangeViewProj();
-}
+};
 
 Camera.prototype.ChangeLookAt = function (cameraPosition, cameraTarget, cameraUpVector) {
     this.cameraPosition = cameraPosition;
     this.cameraTarget = cameraTarget;
     this.cameraUpVector = cameraUpVector;
     this.ChangeViewProj();
-}
+};
 
 Camera.prototype.ChangeViewProj = function () {
     this.view = CreateLookAt(this.cameraPosition, this.cameraTarget, this.cameraUpVector);
     this.viewproj = Multiply(this.view, this.projection);
-}
+};
 
 Camera.prototype.WithinEpsilon = function (a, b) {
     var num = a - b;
     return (-EPSILON <= num) && (num <= EPSILON);
-}
+};
 
 Camera.prototype.Unproject = function (source, view, projection, world) {
     var minz = 0;
@@ -738,7 +728,7 @@ Camera.prototype.Unproject = function (source, view, projection, world) {
         vector4.Divide(a);
     }
     return vector4;
-}
+};
 
 Camera.prototype.RotateCamera = function (anglex, angley, radio) {
     var v = [Math.cos(anglex), Math.sin(angley), Math.sin(anglex) - Math.cos(angley)];
@@ -747,7 +737,7 @@ Camera.prototype.RotateCamera = function (anglex, angley, radio) {
 
     var position = [v[0] * radio, v[1] * radio, v[2] * radio];
     this.ChangeCameraPosition(position);
-}
+};
 
 /*
  * 3D ENGINE - CAMERA
@@ -792,51 +782,51 @@ SphereCamera.prototype.ChangeFieldOfView = function (fieldOfView) {
     this.aspectRatio = this.aspectRatio;
     this.projection = CreatePerspectiveFieldOfView(Math.PI / 4, this.aspectRatio, 1, 1000);
     this.viewproj = Multiply(this.view, this.projection);
-}
+};
 
 SphereCamera.prototype.ChangeAspectRatio = function (aspectRatio) {
     this.aspectRatio = aspectRatio;
     this.projection = CreatePerspectiveFieldOfView(Math.PI / 4, this.aspectRatio, 1, 1000);
     this.viewproj = Multiply(this.view, this.projection);
-}
+};
 
 SphereCamera.prototype.ChangePerspectiveFieldOfView = function (fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance) {
     this.projection = CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance);
     this.viewproj = Multiply(this.view, this.projection);
-}
+};
 
 SphereCamera.prototype.ChangeCameraPosition = function (position) {
     this.cameraPosition = position;
     this.position = position;
     this.ChangeViewProj();
-}
+};
 
 SphereCamera.prototype.ChangeCameraTarget = function (target) {
     this.cameraTarget = target;
     this.ChangeViewProj();
-}
+};
 
 SphereCamera.prototype.ChangeCameraUpVector = function (upVector) {
     this.cameraUpVector = upVector;
     this.ChangeViewProj();
-}
+};
 
 SphereCamera.prototype.ChangeLookAt = function (cameraPosition, cameraTarget, cameraUpVector) {
     this.cameraPosition = cameraPosition;
     this.cameraTarget = cameraTarget;
     this.cameraUpVector = cameraUpVector;
     this.ChangeViewProj();
-}
+};
 
 SphereCamera.prototype.ChangeViewProj = function () {
     this.view = CreateLookAt(this.cameraPosition, this.cameraTarget, this.cameraUpVector);
     this.viewproj = Multiply(this.view, this.projection);
-}
+};
 
 SphereCamera.prototype.WithinEpsilon = function (a, b) {
     var num = a - b;
     return (-EPSILON <= num) && (num <= EPSILON);
-}
+};
 
 SphereCamera.prototype.Unproject = function (source, view, projection, world) {
     var minz = 0;
@@ -856,18 +846,18 @@ SphereCamera.prototype.Unproject = function (source, view, projection, world) {
         vector4.Divide(a);
     }
     return vector4;
-}
+};
 
 SphereCamera.prototype.GetViewMatrix = function () {
     var rot = CreateFromQuaternion(this.qNow);
     rot.Invert();
     this.position = TransformV3Matrix(this.cameraPosition, rot);
     return CreateLookAt(this.position, this.cameraTarget, TransformV3Matrix(this.cameraUpVector, rot));
-}
+};
 
 SphereCamera.prototype.GetPosition = function () {
     return this.position;
-}
+};
 
 SphereCamera.prototype.ScreenToVector = function (screenX, screenY) {
     var offset = this.offset;
@@ -888,7 +878,7 @@ SphereCamera.prototype.ScreenToVector = function (screenX, screenY) {
         z = Math.sqrt(1.0 - mag);
 
     return [x, -y, z];
-}
+};
 
 SphereCamera.prototype.QuatFromBallPoints = function (from, to) {
     var dot = DotV3(from, to);
@@ -929,7 +919,7 @@ SphereCamera.prototype.OnRotateCamera = function (eventType, position) {
         this.viewproj = Multiply(this.view, this.projection);
     }
     return this.isDraggin;
-}
+};
 
 function Quaternion(x, y, z, w) {
     this[0] = x;
@@ -941,7 +931,7 @@ function Quaternion(x, y, z, w) {
 Quaternion.prototype.Identity = function () {
     return new Quaternion(0, 0, 0, 1);
 
-}
+};
 
 function QuaternionProduct(quaternion1, quaternion2) {
     var quaternion = new Quaternion();
@@ -1005,27 +995,27 @@ Model.prototype.ChangeColor = function (fillColor, borderColor) {
     this.color = fillColor;
     this.borderColor = borderColor;
     this.UpdateColor();
-}
+};
 
 Model.prototype.UpdateColor = function () {
     var c = this.color;
     var v = this.borderColor;
     this.strokeColor = rgba + v[0]+ comma + v[1]+ comma + v[2] + comma + v[3] + close;
     this.fillColor = rgba + c[0] + comma + c[1] + comma + c[2] + comma + c[3] + close;
-}
+};
 
 Model.prototype.AddVertex = function (x, y, z) {
     var position = this.vertices.length;
     this.vertices[position] = new Point3D(x, y, z);
     return position;
-}
+};
 
 Model.prototype.AddTriangle = function (p1, p2, p3) {
     var position = this.index.length;
     this.index[position] = p1;
     this.index[position + 1] = p2;
     this.index[position + 2] = p3;
-}
+};
 
 Model.prototype.AddPolygon = function (poligon) {
     var position = this.poligons.length;
@@ -1035,12 +1025,12 @@ Model.prototype.AddPolygon = function (poligon) {
         vertices[i] = poligon[i];
     }
     this.poligons[position] = vertices;
-}
+};
 
 Model.prototype.AddColor = function (color) {
     var position = this.colors.length;
     this.colors[position] = color;
-}
+};
 
 Model.prototype.RefreshWorld = function () {
     var rotationMatrix = CreateFromYawPitchRoll(this.rotation[1], this.rotation[0], this.rotation[2]);
@@ -1053,28 +1043,28 @@ Model.prototype.RefreshWorld = function () {
     this.world = Multiply(scaleMatrix, translationMatrix);
     this.world = Multiply(rotationMatrix, this.world);
     this.refreshedBoudingBox = false;
-}
+};
 
 Model.prototype.ChangePosition = function (x, y, z) {
     this.position[0] = x;
     this.position[1] = y;
     this.position[2] = z;
     this.RefreshWorld();
-}
+};
 
 Model.prototype.ChangeRotation = function (x, y, z) {
     this.rotation[0] = x;
     this.rotation[1] = y;
     this.rotation[2] = z;
     this.RefreshWorld();
-}
+};
 
 Model.prototype.ChangeScale = function (x, y, z) {
     this.scale[0] = x;
     this.scale[1] = y;
     this.scale[2] = z;
     this.RefreshWorld();
-}
+};
 
 Model.prototype.RefreshBoundingBox = function (vectors) {
     if (!this.refreshedBoudingBox) {
@@ -1098,11 +1088,11 @@ Model.prototype.RefreshBoundingBox = function (vectors) {
         this.boundingBox.max = vector2;
         this.refreshedBoudingBox = true;
     }
-}
+};
 
 Model.prototype.GetDistanceToCamera = function (vector) {
     return Math.sqrt(((vector[0] - this.position[0]) * (vector[0] - this.position[0])) + ((vector[1] - this.position[1]) * (vector[1] - this.position[1])) + ((vector[2] - this.position[2]) * (vector[2] - this.position[2])));
-}
+};
 
 function GroupModel(id) {
     this.id = id;
@@ -1119,28 +1109,28 @@ function GroupModel(id) {
 
 GroupModel.prototype.AddModel = function (model) {
     this.models[this.models.length] = model;
-}
+};
 
 GroupModel.prototype.ChangePosition = function (x, y, z) {
     this.position[0] = x;
     this.position[1] = y;
     this.position[2] = z;
     this.RefreshWorld();
-}
+};
 
 GroupModel.prototype.ChangeRotation = function (x, y, z) {
     this.rotation[0] = x;
     this.rotation[1] = y;
     this.rotation[2] = z;
     this.RefreshWorld();
-}
+};
 
 GroupModel.prototype.ChangeScale = function (x, y, z) {
     this.scale[0] = x;
     this.scale[1] = y;
     this.scale[2] = z;
     this.RefreshWorld();
-}
+};
 
 GroupModel.prototype.RefreshWorld = function () {
     var rotationMatrix = CreateFromYawPitchRoll(this.rotation[1], this.rotation[0], this.rotation[2]);
@@ -1161,7 +1151,7 @@ GroupModel.prototype.RefreshWorld = function () {
         models[i].world = Multiply(models[i].world, this.world);
     }
     this.refreshedBoudingBox = false;
-}
+};
 
 GroupModel.prototype.RefreshBoundingBox = function (vectors) {
     if (!this.refreshedBoudingBox) {
@@ -1187,11 +1177,11 @@ GroupModel.prototype.RefreshBoundingBox = function (vectors) {
         this.boundingBox.max = vector2;
         this.refreshedBoudingBox = true;
     }
-}
+};
 
 GroupModel.prototype.GetDistanceToCamera = function (vector) {
     return Math.sqrt(((vector[0] - this.position[0]) * (vector[0] - this.position[0])) + ((vector[1] - this.position[1]) * (vector[1] - this.position[1])) + ((vector[2] - this.position[2]) * (vector[2] - this.position[2])));
-}
+};
 
 /*
  * 3D ENGINE - BOUNDING BOX
@@ -1211,9 +1201,10 @@ function Scene(canvas) {
     this.camera = new Camera(canvas.width, canvas.height);
     this.light = [150, 150, 150];
     this.light.Invert();
-    this.light.Normalize();
+
     this.ambientColor = [47, 79, 79];
-    this.shadowMatrix = CreateShadowMatrix([0, 1, 0], this.light, -1);
+    this.shadowMatrix = CreateShadowMatrix([0, 1, 0], this.light, 0);
+    this.light.Normalize();
     this.context = null;
     try {
         this.context = canvas.getContext("2d");
@@ -1231,25 +1222,29 @@ function Scene(canvas) {
 
 Scene.prototype.AddCamera = function (camera) {
     this.camera = camera;
-}
+};
 
 Scene.prototype.AddModel = function (model) {
     var position = this.models.length;
     this.models[position] = model;
     return position;
-}
+};
 
 Scene.prototype.AddGroupModel = function (groupModel) {
     var position = this.groupModels.length;
     this.groupModels[position] = groupModel;
     return position;
-}
+};
 
 Scene.prototype.ChangeLight = function (x, y, z) {
     this.light[0] = x;
     this.light[1] = y;
     this.light[2] = z;
-}
+    this.light.Invert();
+
+    this.shadowMatrix = CreateShadowMatrix([0, 1, 0], this.light, 0);
+    this.light.Normalize();
+};
 
 Scene.prototype.RenderDebugLines = function (model) {
     var corners = model.boundingBox.GetConers();
@@ -1283,7 +1278,7 @@ Scene.prototype.RenderDebugLines = function (model) {
     this.context.lineTo(vcorners[7][0], vcorners[7][1]);
     this.context.stroke();
     this.context.closePath();
-}
+};
 
 function SortModels(preSortModels) {
     var result;
@@ -1408,11 +1403,11 @@ Scene.prototype.Render = function (type) {
             }
         }
     }
-}
+};
 
 Scene.prototype.ClearScreen = function () {
     this.context.clearRect(0, 0, this.width, this.height);
-}
+};
 
 Scene.prototype.DrawPoints = function (vertices) {
     this.context.beginPath();
@@ -1423,7 +1418,7 @@ Scene.prototype.DrawPoints = function (vertices) {
     }
     this.context.stroke();
     this.context.closePath();
-}
+};
 
 Scene.prototype.DrawWire = function (vertices, model) {
     var indexes = model.index;
@@ -1488,7 +1483,7 @@ Scene.prototype.DrawWire = function (vertices, model) {
         }
     }
     this.context.stroke();
-}
+};
 
 Scene.prototype.DrawSolid = function (vertices, model) {
     var ambientColor = this.ambientColor;
@@ -1623,7 +1618,7 @@ Scene.prototype.DrawSolid = function (vertices, model) {
             context.fill();
         }
     }
-}
+};
 
 Scene.prototype.DrawShadow = function (vertices, model) {
     if (model.hasShadow) {
@@ -1672,7 +1667,7 @@ Scene.prototype.DrawShadow = function (vertices, model) {
             this.context.fill();
         }
     }
-}
+};
 
 Scene.prototype.GetModelInMap = function (position) {
     var nearSource = [position[0], position[1], 0];
@@ -1709,7 +1704,7 @@ Scene.prototype.GetModelInMap = function (position) {
     }
 
     return found;
-}
+};
 
 Scene.prototype.GetGroupModelInMap = function (position) {
     var nearSource = [position[0], position[1], 0];
@@ -1746,7 +1741,7 @@ Scene.prototype.GetGroupModelInMap = function (position) {
     }
 
     return found;
-}
+};
 
 function GetCube() {
     var puzzlecube = new Model();
