@@ -9,8 +9,8 @@
     <script type="text/javascript">
         function OnLoad() {
             var canvas = document.getElementById("canvas");
-            var scene = new Scene(canvas);
-            var camera = new Camera(canvas.width, canvas.height);
+            var scene = new WaveEngineJS.Scene(canvas);
+            var camera = new WaveEngineJS.Camera(canvas.width, canvas.height);
             scene.AddCamera(camera);
             camera.ChangeCameraPosition([0,150, 150]);
             var total = document.getElementById("total");

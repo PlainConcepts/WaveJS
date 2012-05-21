@@ -1,4 +1,4 @@
-var plane01 = new Model();
+var plane01 = new WaveEngineJS.Model();
 plane01.AddVertex(-100.0000,0.0000,90.0000);
 plane01.AddVertex(-100.0000,0.0000,100.0000);
 plane01.AddVertex(-90.0000,0.0000,100.0000);
