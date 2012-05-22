@@ -1,4 +1,4 @@
-var geosphere01 = new WaveEngineJS.Model();
+var geosphere01 = new WaveEngineJS.Model("Sphere");
 geosphere01.AddVertex(0.0004,3.4708,0.0003);
 geosphere01.AddVertex(0.9488,3.3387,0.0003);
 geosphere01.AddVertex(0.2935,3.3387,-0.9017);

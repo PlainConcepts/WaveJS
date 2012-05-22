@@ -4,32 +4,29 @@
     <title></title>
     <script type="text/javascript" src="../js/lib/requestanimationframe.js"></script>
     <script type="text/javascript" src="../js/lib/waveenginejs.js"></script>
-    <script type="text/javascript" src="../models/geosphere01.js"></script>
-    <script type="text/javascript" src="../models/plane01.js"></script>
+    <script type="text/javascript" src="../models/noname0.js"></script>
     <script type="text/javascript">
+        "use strict";
         function OnLoad() {
             var canvas = document.getElementById("canvas");
             var scene = new WaveEngineJS.Scene(canvas);
             var camera = new WaveEngineJS.Camera(canvas.width, canvas.height);
-            scene.AddCamera(camera);
-            camera.ChangeCameraPosition([0,150, 150]);
             var total = document.getElementById("total");
-            scene.ChangeLight(150, 150, 150);
-            geosphere01.ChangeColor([0, 28, 123, 1], [0, 28, 123, 1]);
-            geosphere01.hasIllumination = true;
-            geosphere01.hasShadow = true;
-            geosphere01.ChangeScale(7, 7,7);
-            geosphere01.ChangePosition(0, 50, 0);
-            plane01.ChangeColor([123, 123, 123, 1], [0, 0, 0, 1]);
-            plane01.hasShadow = false;
-            scene.AddModel(plane01);
-            scene.AddModel(geosphere01);
+
+            scene.AddCamera(camera);
+            camera.ChangeCameraPosition([0,2,2]);
+
+            noname0.ChangeScale(7, 7, 7);
+            noname0.ChangeColor([255, 0, 0, 1], [255, 0, 0, 1]);
+            noname0.hasIllumination = true;
+            noname0.hasShadow = false;
+            scene.AddModel(noname0);
             
             window.requestAnimationFrame(animate);
             var rotY = 0;
             function animate() {
                 var date = new Date();
-                scene.models[1].ChangeRotation(0, rotY, 0);
+                scene.models[0].ChangeRotation(0, rotY, 0);
                 Draw();
                 rotY -= 0.1;
                 total.textContent = new Date() - date;
@@ -58,11 +55,6 @@
 </head>
 <body onload="OnLoad();">
     <canvas width="998" height="498" id="canvas">Canvas not supported. </canvas>
-    <!--<svg width="998" height="498" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" style="fill: white" />
-        <g id="origin" transform="translate(0,0)" fill="#f00">
-        </g>
-    </svg>-->
     <p id="total"></p>
 </body>
 </html>

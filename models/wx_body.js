@@ -1,4 +1,4 @@
-var wx_body = new WaveEngineJS.Model();
+var wx_body = new WaveEngineJS.Model("XWing");
 wx_body.AddVertex(-0.5103,0.1943,2.8125);
 wx_body.AddVertex(-0.5107,0.1943,1.3591);
 wx_body.AddVertex(0.5102,0.1943,1.3588);

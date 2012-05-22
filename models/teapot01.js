@@ -1,4 +1,4 @@
-var teapot01 = new WaveEngineJS.Model();
+var teapot01 = new WaveEngineJS.Model("Teapot");
 teapot01.AddVertex(1.4540,2.4922,0.0000);
 teapot01.AddVertex(1.3413,2.4922,0.5706);
 teapot01.AddVertex(1.3226,2.5688,0.5627);
