@@ -11,25 +11,25 @@
             var canvas = document.getElementById("canvas");
             var scene = new WaveEngineJS.Scene(canvas);
             var camera = new WaveEngineJS.Camera(canvas.width, canvas.height);
-            scene.AddCamera(camera);
-            camera.ChangeCameraPosition([0,150, 150]);
+            scene.addCamera(camera);
+            camera.changeCameraPosition([0,150, 150]);
             var total = document.getElementById("total");
-            scene.ChangeLight(150, 150, 150);
-            geosphere01.ChangeColor([0, 28, 123, 1], [0, 28, 123, 1]);
+            scene.changeLight(150, 150, 150);
+            geosphere01.changeColor([0, 28, 123, 1], [0, 28, 123, 1]);
             geosphere01.hasIllumination = true;
             geosphere01.hasShadow = true;
-            geosphere01.ChangeScale(7, 7,7);
-            geosphere01.ChangePosition(0, 50, 0);
-            plane01.ChangeColor([123, 123, 123, 1], [0, 0, 0, 1]);
+            geosphere01.changeScale(7, 7,7);
+            geosphere01.changePosition(0, 50, 0);
+            plane01.changeColor([123, 123, 123, 1], [0, 0, 0, 1]);
             plane01.hasShadow = false;
-            scene.AddModel(plane01);
-            scene.AddModel(geosphere01);
+            scene.addModel(plane01);
+            scene.addModel(geosphere01);
             
             window.requestAnimationFrame(animate);
             var rotY = 0;
             function animate() {
                 var date = new Date();
-                scene.models[1].ChangeRotation(0, rotY, 0);
+                scene.models[1].changeRotation(0, rotY, 0);
                 Draw();
                 rotY -= 0.1;
                 total.textContent = new Date() - date;
@@ -42,13 +42,13 @@
                 var date = new Date();
                 switch (drawType) {
                     case scene.WIRE:
-                        scene.Render(scene.WIRE);
+                        scene.render(scene.WIRE);
                         break;
                     case scene.SOLID:
-                        scene.Render(scene.SOLID);
+                        scene.render(scene.SOLID);
                         break;
                     case scene.POINTS:
-                        scene.Render(scene.POINTS);
+                        scene.render(scene.POINTS);
                         break;
                 }
                 total.textContent = new Date() - date;

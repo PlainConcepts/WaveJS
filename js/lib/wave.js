@@ -5,7 +5,6 @@
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *
- * http://docs.jquery.com/
  */
 "use strict";
 var WaveEngineJS = {
@@ -19,7 +18,7 @@ var WaveEngineJS = {
     comma:',',
     close:')',
     EPSILON:1.401298E-45,
-    svgNS:"http://www.w3.org/2000/svg",
+
     /**
      * Create an instance of Matrix 4x4
      * @return {Matrix}
@@ -54,7 +53,7 @@ var WaveEngineJS = {
          * @this {Matrix}
          * @constructor
          */
-        this.Invert = function () {
+        this.invert = function () {
             var num5 = that.position[0];
             var num4 = that.position[1];
             var num3 = that.position[2];
@@ -146,7 +145,7 @@ var WaveEngineJS = {
      * @this {Matrix}
      * @constructor
      */
-    CreateTranslation:function (vector3) {
+    createTranslation:function (vector3) {
         var matrix = new WaveEngineJS.Matrix();
         var position = matrix.position;
         position[0] = 1;
@@ -176,7 +175,7 @@ var WaveEngineJS = {
      * @this {Matrix}
      * @constructor
      */
-    CreateScale:function (xScale, yScale, zScale) {
+    createScale:function (xScale, yScale, zScale) {
         var matrix = new WaveEngineJS.Matrix();
         var position = matrix.position;
         position[0] = xScale;
@@ -205,7 +204,7 @@ var WaveEngineJS = {
      * @param {number} d distance to plane.
      * @return {Matrix}
      */
-    CreateShadowMatrix:function (plane, light, d) {
+    createShadowMatrix:function (plane, light, d) {
         var matrix = new WaveEngineJS.Matrix();
         var num = ((plane[0] * light[0]) + (plane[1] * light[1])) + (plane[2] * light[2]);
         var num5 = -plane[0];
@@ -240,7 +239,7 @@ var WaveEngineJS = {
      * @param {number} farPlaneDistance
      * @return {Matrix}
      */
-    CreatePerspectiveFieldOfView:function (fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance) {
+    createPerspectiveFieldOfView:function (fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance) {
         var matrix = new WaveEngineJS.Matrix();
         var num = 1 / Math.tan(fieldOfView * 0.5);
         var num9 = num / aspectRatio;
@@ -265,13 +264,13 @@ var WaveEngineJS = {
      * @return {Matrix}
      * @constructor
      */
-    CreateLookAt:function (cameraPosition, cameraTarget, cameraUpVector) {
+    createLookAt:function (cameraPosition, cameraTarget, cameraUpVector) {
         var matrix = new WaveEngineJS.Matrix();
-        var vector = WaveEngineJS.SubstractV3(cameraPosition, cameraTarget);
-        WaveEngineJS.Normalize(vector);
-        var vector2 = WaveEngineJS.CrossV3(cameraUpVector, vector);
-        WaveEngineJS.Normalize(vector2);
-        var vector3 = WaveEngineJS.CrossV3(vector, vector2);
+        var vector = WaveEngineJS.substractV3(cameraPosition, cameraTarget);
+        WaveEngineJS.normalize(vector);
+        var vector2 = WaveEngineJS.crossV3(cameraUpVector, vector);
+        WaveEngineJS.normalize(vector2);
+        var vector3 = WaveEngineJS.crossV3(vector, vector2);
         var position = matrix.position;
         position[0] = vector2[0];
         position[1] = vector3[0];
@@ -285,9 +284,9 @@ var WaveEngineJS = {
         position[9] = vector3[2];
         position[10] = vector[2];
         position[11] = 0;
-        position[12] = -WaveEngineJS.DotV3(vector2, cameraPosition);
-        position[13] = -WaveEngineJS.DotV3(vector3, cameraPosition);
-        position[14] = -WaveEngineJS.DotV3(vector, cameraPosition);
+        position[12] = -WaveEngineJS.dotV3(vector2, cameraPosition);
+        position[13] = -WaveEngineJS.dotV3(vector3, cameraPosition);
+        position[14] = -WaveEngineJS.dotV3(vector, cameraPosition);
         position[15] = 1;
         return matrix;
     },
@@ -297,7 +296,7 @@ var WaveEngineJS = {
      * @param {Quaternion} quaternion
      * @return {Matrix}
      */
-    CreateFromQuaternion:function (quaternion) {
+    createFromQuaternion:function (quaternion) {
         var matrix = new WaveEngineJS.Matrix();
         var num9 = quaternion[0] * quaternion[0];
         var num8 = quaternion[1] * quaternion[1];
@@ -334,7 +333,7 @@ var WaveEngineJS = {
      * @param {Matrix} matrix2
      * @return {Matrix}
      */
-    Multiply:function (matrix1, matrix2) {
+    multiply:function (matrix1, matrix2) {
         var matrix = new WaveEngineJS.Matrix();
         var position = matrix.position;
         var position1 = matrix1.position;
@@ -366,7 +365,7 @@ var WaveEngineJS = {
      * @param {number} screenHeight Screen Height
      * @return {Array(2)}
      */
-    Convert:function (pos, worldviewproj, screenWidth, screenHeight) {
+    convert:function (pos, worldviewproj, screenWidth, screenHeight) {
         var vx = pos[0];
         var vy = pos[1];
         var vz = pos[2];
@@ -388,15 +387,15 @@ var WaveEngineJS = {
      * Normalize a vector
      * @this {Array}
      */
-    Normalize:function (vector) {
+    normalize:function (vector) {
         if (vector.length === 2) {
-            WaveEngineJS.NormalizeVector2(vector);
+            WaveEngineJS.normalizeVector2(vector);
         }
         else if (vector.length === 3) {
-            WaveEngineJS.NormalizeVector3(vector);
+            WaveEngineJS.normalizeVector3(vector);
         }
         else if (vector.length === 4) {
-            WaveEngineJS.NormalizeVector4(vector);
+            WaveEngineJS.normalizeVector4(vector);
         }
     },
 
@@ -404,7 +403,7 @@ var WaveEngineJS = {
      * Normalize a vector2
      * @param {Array(2)} value
      */
-    NormalizeVector2:function (value) {
+    normalizeVector2:function (value) {
         var num2 = (value[0] * value[0]) + (value[1] * value[1]);
         var num = 1 / (Math.sqrt(num2));
         value[0] *= num;
@@ -415,7 +414,7 @@ var WaveEngineJS = {
      * Normalize a vector3
      * @param value
      */
-    NormalizeVector3:function (value) {
+    normalizeVector3:function (value) {
         var x = value[0];
         var y = value[1];
         var z = value[2];
@@ -431,7 +430,7 @@ var WaveEngineJS = {
      * Normalize a vector4
      * @param value
      */
-    NormalizeVector4:function (value) {
+    normalizeVector4:function (value) {
         var x = value[0];
         var y = value[1];
         var z = value[2];
@@ -450,7 +449,7 @@ var WaveEngineJS = {
      * @this {Array(3)};
      * @constructor
      */
-    Invert:function (vector3) {
+    invert:function (vector3) {
         vector3[0] = -vector3[0];
         vector3[1] = -vector3[1];
         vector3[2] = -vector3[2];
@@ -461,7 +460,7 @@ var WaveEngineJS = {
      * @param {number} divider
      * @this {Array}
      */
-    Divide:function (vector4, divider) {
+    divide:function (vector4, divider) {
         var num = 1 / divider;
         vector4[0] = vector4[0] * num;
         vector4[1] = vector4[1] * num;
@@ -476,7 +475,7 @@ var WaveEngineJS = {
      * @return {Array}
      * @constructor
      */
-    SubstractV3:function (vector1, vector2) {
+    substractV3:function (vector1, vector2) {
         return [vector1[0] - vector2[0],
             vector1[1] - vector2[1],
             vector1[2] - vector2[2]];
@@ -488,7 +487,7 @@ var WaveEngineJS = {
      * @param {Array(3)} vector2
      * @return {Array}
      */
-    CrossV3:function (vector1, vector2) {
+    crossV3:function (vector1, vector2) {
         var x = (vector1[1] * vector2[2]) - (vector1[2] * vector2[1]);
         var y = (vector1[2] * vector2[0]) - (vector1[0] * vector2[2]);
         var z = (vector1[0] * vector2[1]) - (vector1[1] * vector2[0]);
@@ -502,7 +501,7 @@ var WaveEngineJS = {
      * @return {number}
      * @constructor
      */
-    DotV3:function (vector1, vector2) {
+    dotV3:function (vector1, vector2) {
         return (vector1[0] * vector2[0]) +
             (vector1[1] * vector2[1]) +
             (vector1[2] * vector2[2]);
@@ -514,7 +513,7 @@ var WaveEngineJS = {
      * @param {Matrix} matrix Transformation Matrix.
      * @return {Array}
      */
-    TransformV3Matrix:function (position, matrix) {
+    transformV3Matrix:function (position, matrix) {
         var p = matrix.position;
         var x = position[0];
         var y = position[1];
@@ -526,7 +525,7 @@ var WaveEngineJS = {
     },
 
 
-    TransformV4Matrix:function (vector, matrix) {
+    transformV4Matrix:function (vector, matrix) {
         var vx = vector[0];
         var vy = vector[1];
         var vz = vector[2];
@@ -539,28 +538,28 @@ var WaveEngineJS = {
         return [x, y, z, w];
     },
 
-    Max:function (value1, value2) {
+    max:function (value1, value2) {
         return [(value1[0] > value2[0]) ? value1[0] : value2[0],
             (value1[1] > value2[1]) ? value1[1] : value2[1],
             (value1[2] > value2[2]) ? value1[2] : value2[2],
             (value1[3] > value2[3]) ? value1[3] : value2[3]];
     },
 
-    Min:function (value1, value2) {
+    min:function (value1, value2) {
         return [(value1[0] < value2[0]) ? value1[0] : value2[0],
             (value1[1] < value2[1]) ? value1[1] : value2[1],
             (value1[2] < value2[2]) ? value1[2] : value2[2],
             (value1[3] < value2[3]) ? value1[3] : value2[3]];
     },
 
-    SubstractV4:function (value1, value2) {
+    substractV4:function (value1, value2) {
         return [value1[0] - value2[0],
             value1[1] - value2[1],
             value1[2] - value2[2],
             value1[3] - value2[3]];
     },
 
-    CreateFromYawPitchRoll:function (yaw, pitch, roll) {
+    createFromYawPitchRoll:function (yaw, pitch, roll) {
         var quaternion = new Array();
         var num9 = roll * 0.5;
         var num6 = Math.sin(num9);
@@ -614,13 +613,12 @@ var WaveEngineJS = {
      * Dual licensed under the MIT (MIT-LICENSE.txt)
      * and GPL (GPL-LICENSE.txt) licenses.
      *
-     * http://docs.jquery.com/
      */
 
     BoundingBox:function () {
         var that = this;
-        this.min = new Array();
-        this.max = new Array();
+        this.min = [];
+        this.max = [];
 
         this.Intersects = function (ray) {
             var num = 0;
@@ -712,10 +710,9 @@ var WaveEngineJS = {
      * Dual licensed under the MIT (MIT-LICENSE.txt)
      * and GPL (GPL-LICENSE.txt) licenses.
      *
-     * http://docs.jquery.com/
      */
 
-    Ray:function (position, direction) {
+    ray:function (position, direction) {
         this.position = position;
         this.direction = direction;
     },
@@ -727,7 +724,6 @@ var WaveEngineJS = {
      * Dual licensed under the MIT (MIT-LICENSE.txt)
      * and GPL (GPL-LICENSE.txt) licenses.
      *
-     * http://docs.jquery.com/
      */
 
 
@@ -739,87 +735,87 @@ var WaveEngineJS = {
         this.width = width;
         this.height = height;
         this.aspectRatio = this.width / this.height;
-        this.view = WaveEngineJS.CreateLookAt(this.cameraPosition, this.cameraTarget, this.cameraUpVector);
-        this.projection = WaveEngineJS.CreatePerspectiveFieldOfView(Math.PI / 4, this.aspectRatio, 1, 1000);
-        this.viewproj = WaveEngineJS.Multiply(this.view, this.projection);
+        this.view = WaveEngineJS.createLookAt(this.cameraPosition, this.cameraTarget, this.cameraUpVector);
+        this.projection = WaveEngineJS.createPerspectiveFieldOfView(Math.PI / 4, this.aspectRatio, 1, 1000);
+        this.viewproj = WaveEngineJS.multiply(this.view, this.projection);
 
-        this.GetPosition = function () {
+        this.getPosition = function () {
             return that.cameraPosition;
         };
 
-        this.ChangePerspectiveFieldOfView = function (fieldOfView) {
+        this.changePerspectiveFieldOfView = function (fieldOfView) {
             that.projection = fieldOfView;
-            that.viewproj = WaveEngineJS.Multiply(that.view, that.projection);
+            that.viewproj = WaveEngineJS.multiply(that.view, that.projection);
         };
 
-        this.ChangeAspectRatio = function (aspectRatio) {
+        this.changeAspectRatio = function (aspectRatio) {
             that.aspectRatio = aspectRatio;
-            that.projection = WaveEngineJS.CreatePerspectiveFieldOfView(Math.PI / 4, that.aspectRatio, 1, 1000);
-            that.viewproj = WaveEngineJS.Multiply(that.view, that.projection);
+            that.projection = WaveEngineJS.createPerspectiveFieldOfView(Math.PI / 4, that.aspectRatio, 1, 1000);
+            that.viewproj = WaveEngineJS.multiply(that.view, that.projection);
         };
 
-        this.ChangePerspectiveFieldOfView = function (fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance) {
-            that.projection = WaveEngineJS.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance);
-            that.viewproj = WaveEngineJS.Multiply(that.view, that.projection);
+        this.changePerspectiveFieldOfView = function (fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance) {
+            that.projection = WaveEngineJS.createPerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance);
+            that.viewproj = WaveEngineJS.multiply(that.view, that.projection);
         };
 
-        this.ChangeCameraPosition = function (position) {
+        this.changeCameraPosition = function (position) {
             that.cameraPosition = position;
-            that.ChangeViewProj();
+            that.changeViewProj();
         };
 
-        this.ChangeCameraTarget = function (target) {
+        this.changeCameraTarget = function (target) {
             that.cameraTarget = target;
-            that.ChangeViewProj();
+            that.changeViewProj();
         };
 
-        this.ChangeCameraUpVector = function (upVector) {
+        this.changeCameraUpVector = function (upVector) {
             that.cameraUpVector = upVector;
-            that.ChangeViewProj();
+            that.changeViewProj();
         };
 
-        this.ChangeLookAt = function (cameraPosition, cameraTarget, cameraUpVector) {
+        this.changeLookAt = function (cameraPosition, cameraTarget, cameraUpVector) {
             that.cameraPosition = cameraPosition;
             that.cameraTarget = cameraTarget;
             that.cameraUpVector = cameraUpVector;
-            that.ChangeViewProj();
+            that.changeViewProj();
         };
 
-        this.ChangeViewProj = function () {
-            that.view = WaveEngineJS.CreateLookAt(that.cameraPosition, that.cameraTarget, that.cameraUpVector);
-            that.viewproj = WaveEngineJS.Multiply(that.view, that.projection);
+        this.changeViewProj = function () {
+            that.view = WaveEngineJS.createLookAt(that.cameraPosition, that.cameraTarget, that.cameraUpVector);
+            that.viewproj = WaveEngineJS.multiply(that.view, that.projection);
         };
 
-        this.WithinEpsilon = function (a, b) {
+        this.withinEpsilon = function (a, b) {
             var num = a - b;
             return (-WaveEngineJS.EPSILON <= num) && (num <= WaveEngineJS.EPSILON);
         };
 
-        this.Unproject = function (source, view, projection, world) {
+        this.unproject = function (source, view, projection, world) {
             var minz = 0;
             var maxz = 1;
 
-            var matrix = WaveEngineJS.Multiply(WaveEngineJS.Multiply(world, view), projection);
-            matrix.Invert();
+            var matrix = WaveEngineJS.multiply(WaveEngineJS.multiply(world, view), projection);
+            matrix.invert();
             source[0] = (((source[0]) / (that.width)) * 2) - 1;
             source[1] = -((((source[1]) / (that.height)) * 2) - 1);
             source[2] = (source[2] - minz) / (maxz - minz);
-            var vector = WaveEngineJS.TransformV3Matrix(source, matrix);
+            var vector = WaveEngineJS.transformV3Matrix(source, matrix);
             var vector4 = [vector[0], vector[1], vector[2], 1];
             var position = matrix.position;
             var a = (((source[0] * position[3]) + (source[1] * position[7])) + (source[2] * position[11])) + position[15];
-            if (!that.WithinEpsilon(a, 1)) {
-                WaveEngineJS.Divide(vector4, a);
+            if (!that.withinEpsilon(a, 1)) {
+                WaveEngineJS.divide(vector4, a);
             }
             return vector4;
         };
 
-        this.RotateCamera = function (anglex, angley, radio) {
+        this.rotateCamera = function (anglex, angley, radio) {
             var v = [Math.cos(anglex), Math.sin(angley), Math.sin(anglex) - Math.cos(angley)];
-            WaveEngineJS.Normalize(v);
+            WaveEngineJS.normalize(v);
 
             var position = [v[0] * radio, v[1] * radio, v[2] * radio];
-            that.ChangeCameraPosition(position);
+            that.changeCameraPosition(position);
         };
     },
 
@@ -831,7 +827,6 @@ var WaveEngineJS = {
      * Dual licensed under the MIT (MIT-LICENSE.txt)
      * and GPL (GPL-LICENSE.txt) licenses.
      *
-     * http://docs.jquery.com/
      */
 
     SphereCamera:function (width, height) {
@@ -842,9 +837,9 @@ var WaveEngineJS = {
         this.size = [width, height];
         this.offset = [0, 0];
         this.aspectRatio = width / height;
-        this.view = WaveEngineJS.CreateLookAt(this.cameraPosition, this.cameraTarget, this.cameraUpVector);
-        this.projection = WaveEngineJS.CreatePerspectiveFieldOfView(Math.PI / 3, this.aspectRatio, 1, 1000);
-        this.viewproj = WaveEngineJS.Multiply(this.view, this.projection);
+        this.view = WaveEngineJS.createLookAt(this.cameraPosition, this.cameraTarget, this.cameraUpVector);
+        this.projection = WaveEngineJS.createPerspectiveFieldOfView(Math.PI / 3, this.aspectRatio, 1, 1000);
+        this.viewproj = WaveEngineJS.multiply(this.view, this.projection);
         this.downPosition = [0, 0, 0];
         this.currentPosition = [0, 0, 0];
         this.radius = 0.9;
@@ -863,88 +858,88 @@ var WaveEngineJS = {
             that.position = [0, 0, 15];
         };
 
-        this.ChangeFieldOfView = function (fieldOfView) {
+        this.changeFieldOfView = function (fieldOfView) {
             that.aspectRatio = that.aspectRatio;
-            that.projection = WaveEngineJS.CreatePerspectiveFieldOfView(Math.PI / 4, that.aspectRatio, 1, 1000);
-            that.viewproj = WaveEngineJS.Multiply(that.view, that.projection);
+            that.projection = WaveEngineJS.createPerspectiveFieldOfView(Math.PI / 4, that.aspectRatio, 1, 1000);
+            that.viewproj = WaveEngineJS.multiply(that.view, that.projection);
         };
 
-        this.ChangeAspectRatio = function (aspectRatio) {
+        this.changeAspectRatio = function (aspectRatio) {
             that.aspectRatio = aspectRatio;
-            that.projection = WaveEngineJS.CreatePerspectiveFieldOfView(Math.PI / 4, that.aspectRatio, 1, 1000);
-            that.viewproj = WaveEngineJS.Multiply(that.view, that.projection);
+            that.projection = WaveEngineJS.createPerspectiveFieldOfView(Math.PI / 4, that.aspectRatio, 1, 1000);
+            that.viewproj = WaveEngineJS.multiply(that.view, that.projection);
         };
 
-        this.ChangePerspectiveFieldOfView = function (fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance) {
-            that.projection = WaveEngineJS.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance);
-            that.viewproj = WaveEngineJS.Multiply(that.view, that.projection);
+        this.changePerspectiveFieldOfView = function (fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance) {
+            that.projection = WaveEngineJS.createPerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance);
+            that.viewproj = WaveEngineJS.multiply(that.view, that.projection);
         };
 
-        this.ChangeCameraPosition = function (position) {
+        this.changeCameraPosition = function (position) {
             that.cameraPosition = position;
             that.position = position;
-            that.ChangeViewProj();
+            that.changeViewProj();
         };
 
-        this.ChangeCameraTarget = function (target) {
+        this.changeCameraTarget = function (target) {
             that.cameraTarget = target;
-            that.ChangeViewProj();
+            that.changeViewProj();
         };
 
-        this.ChangeCameraUpVector = function (upVector) {
+        this.changeCameraUpVector = function (upVector) {
             that.cameraUpVector = upVector;
-            that.ChangeViewProj();
+            that.changeViewProj();
         };
 
-        this.ChangeLookAt = function (cameraPosition, cameraTarget, cameraUpVector) {
+        this.changeLookAt = function (cameraPosition, cameraTarget, cameraUpVector) {
             that.cameraPosition = cameraPosition;
             that.cameraTarget = cameraTarget;
             that.cameraUpVector = cameraUpVector;
-            that.ChangeViewProj();
+            that.changeViewProj();
         };
 
-        this.ChangeViewProj = function () {
-            that.view = WaveEngineJS.CreateLookAt(that.cameraPosition, that.cameraTarget, that.cameraUpVector);
-            that.viewproj = WaveEngineJS.Multiply(that.view, that.projection);
+        this.changeViewProj = function () {
+            that.view = WaveEngineJS.createLookAt(that.cameraPosition, that.cameraTarget, that.cameraUpVector);
+            that.viewproj = WaveEngineJS.multiply(that.view, that.projection);
         };
 
-        this.WithinEpsilon = function (a, b) {
+        this.withinEpsilon = function (a, b) {
             var num = a - b;
             return (-WaveEngineJS.EPSILON <= num) && (num <= WaveEngineJS.EPSILON);
         };
 
-        this.Unproject = function (source, view, projection, world) {
+        this.unproject = function (source, view, projection, world) {
             var minz = 0;
             var maxz = 1;
 
-            var matrix = WaveEngineJS.Multiply(WaveEngineJS.Multiply(world, view), projection);
-            matrix.Invert();
+            var matrix = WaveEngineJS.multiply(WaveEngineJS.multiply(world, view), projection);
+            matrix.invert();
 
             source[0] = (((source[0]) / (that.size[0])) * 2) - 1;
             source[1] = -((((source[1]) / (that.size[1])) * 2) - 1);
             source[2] = (source[2] - minz) / (maxz - minz);
-            var vector = WaveEngineJS.TransformV3Matrix(source, matrix);
+            var vector = WaveEngineJS.transformV3Matrix(source, matrix);
             var vector4 = [vector[0], vector[1], vector[2], 1];
             var position = matrix.position;
             var a = (((source[0] * position[3]) + (source[1] * position[7])) + (source[2] * position[11])) + position[15];
-            if (!that.WithinEpsilon(a, 1)) {
-                WaveEngineJS.Divide(vector4, a);
+            if (!that.withinEpsilon(a, 1)) {
+                WaveEngineJS.divide(vector4, a);
             }
             return vector4;
         };
 
-        this.GetViewMatrix = function () {
-            var rot = WaveEngineJS.CreateFromQuaternion(that.qNow);
-            rot.Invert();
-            that.position = WaveEngineJS.TransformV3Matrix(that.cameraPosition, rot);
-            return WaveEngineJS.CreateLookAt(that.position, that.cameraTarget, WaveEngineJS.TransformV3Matrix(that.cameraUpVector, rot));
+        this.getViewMatrix = function () {
+            var rot = WaveEngineJS.createFromQuaternion(that.qNow);
+            rot.invert();
+            that.position = WaveEngineJS.transformV3Matrix(that.cameraPosition, rot);
+            return WaveEngineJS.createLookAt(that.position, that.cameraTarget, WaveEngineJS.transformV3Matrix(that.cameraUpVector, rot));
         };
 
-        this.GetPosition = function () {
+        this.getPosition = function () {
             return that.position;
         };
 
-        this.ScreenToVector = function (screenX, screenY) {
+        this.screenToVector = function (screenX, screenY) {
             var offset = that.offset;
             var size = that.size;
             var radius = that.radius;
@@ -965,18 +960,18 @@ var WaveEngineJS = {
             return [x, -y, z];
         };
 
-        this.QuatFromBallPoints = function (from, to) {
-            var dot = WaveEngineJS.DotV3(from, to);
-            var qPart = WaveEngineJS.CrossV3(from, to);
+        this.quatFromBallPoints = function (from, to) {
+            var dot = WaveEngineJS.dotV3(from, to);
+            var qPart = WaveEngineJS.crossV3(from, to);
             return [qPart[0], qPart[1], qPart[2], dot];
         };
 
 
-        this.OnRotateCamera = function (eventType, position) {
+        this.onRotateCamera = function (eventType, position) {
             if (eventType == "mousedown" || eventType == "MSPointerDown" || eventType == "touchdown") {
                 that.isDraggin = true;
                 that.qDown = [that.qNow[0], that.qNow[1], that.qNow[2], that.qNow[3]];
-                that.downPosition = that.ScreenToVector(position.x, position.y);
+                that.downPosition = that.screenToVector(position.x, position.y);
                 that.downPosition2D = position;
             } else if (eventType == "mouseup" || eventType == "MSPointerUp" || eventType == "touchup" || eventType == "mouseout") {
                 that.isDraggin = false;
@@ -984,10 +979,10 @@ var WaveEngineJS = {
 
             if ((eventType == "mousemove" || eventType == "MSPointerMove" || eventType == "touchmove") && that.isDraggin) {
                 that.currentPosition2D = position;
-                that.currentPosition = that.ScreenToVector(position.x, position.y);
-                that.qNow = WaveEngineJS.QuaternionProduct(that.QuatFromBallPoints(that.downPosition, that.currentPosition), that.qDown);
-                that.view = that.GetViewMatrix();
-                that.viewproj = WaveEngineJS.Multiply(that.view, that.projection);
+                that.currentPosition = that.screenToVector(position.x, position.y);
+                that.qNow = WaveEngineJS.quaternionProduct(that.quatFromBallPoints(that.downPosition, that.currentPosition), that.qDown);
+                that.view = that.getViewMatrix();
+                that.viewproj = WaveEngineJS.multiply(that.view, that.projection);
             }
             return that.isDraggin;
         };
@@ -1006,7 +1001,7 @@ var WaveEngineJS = {
     },
 
 
-    QuaternionProduct:function (quaternion1, quaternion2) {
+    quaternionProduct:function (quaternion1, quaternion2) {
         var quaternion = new WaveEngineJS.Quaternion();
         var x = quaternion1[0];
         var y = quaternion1[1];
@@ -1034,7 +1029,6 @@ var WaveEngineJS = {
      * Dual licensed under the MIT (MIT-LICENSE.txt)
      * and GPL (GPL-LICENSE.txt) licenses.
      *
-     * http://docs.jquery.com/
      */
 
     Point3D:function (x, y, z) {
@@ -1054,18 +1048,18 @@ var WaveEngineJS = {
         this.hasShadow = false;
         this.world = new WaveEngineJS.MatrixIdentity();
         this.refreshedBoudingBox = false;
-        this.boundingBox = new WaveEngineJS.BoundingBox();
+        this.BoundingBox = new WaveEngineJS.BoundingBox();
         this.debugLines = false;
         this.hasIllumination = false;
         this.color = [0, 0, 0, 1];
         this.borderColor = [0, 0, 0, 1];
-        this.ChangeColor = function (fillColor, borderColor) {
+        this.changeColor = function (fillColor, borderColor) {
             that.color = fillColor;
             that.borderColor = borderColor;
-            that.UpdateColor();
+            that.updateColor();
         };
 
-        this.UpdateColor = function () {
+        this.updateColor = function () {
             var c = that.color;
             var v = that.borderColor;
             var rgba = WaveEngineJS.rgba;
@@ -1075,20 +1069,20 @@ var WaveEngineJS = {
             that.fillColor = rgba + c[0] + comma + c[1] + comma + c[2] + comma + c[3] + close;
         };
 
-        this.AddVertex = function (x, y, z) {
+        this.addVertex = function (x, y, z) {
             var position = that.vertices.length;
             that.vertices[position] = new WaveEngineJS.Point3D(x, y, z);
             return position;
         };
 
-        this.AddTriangle = function (p1, p2, p3) {
+        this.addTriangle = function (p1, p2, p3) {
             var position = that.index.length;
             that.index[position] = p1;
             that.index[position + 1] = p2;
             that.index[position + 2] = p3;
         };
 
-        this.AddPolygon = function (poligon) {
+        this.addPolygon = function (poligon) {
             var position = that.poligons.length;
             var vertices = new Array();
             var l = poligon.length;
@@ -1098,37 +1092,37 @@ var WaveEngineJS = {
             that.poligons[position] = vertices;
         };
 
-        this.RefreshWorld = function () {
-            var rotationMatrix = WaveEngineJS.CreateFromYawPitchRoll(that.rotation[1], that.rotation[0], that.rotation[2]);
-            var scaleMatrix = WaveEngineJS.CreateScale(that.scale[0], that.scale[1], that.scale[2]);
-            var translationMatrix = WaveEngineJS.CreateTranslation(that.position);
-            that.world = WaveEngineJS.Multiply(scaleMatrix, translationMatrix);
-            that.world = WaveEngineJS.Multiply(rotationMatrix, that.world);
+        this.refreshWorld = function () {
+            var rotationMatrix = WaveEngineJS.createFromYawPitchRoll(that.rotation[1], that.rotation[0], that.rotation[2]);
+            var scaleMatrix = WaveEngineJS.createScale(that.scale[0], that.scale[1], that.scale[2]);
+            var translationMatrix = WaveEngineJS.createTranslation(that.position);
+            that.world = WaveEngineJS.multiply(scaleMatrix, translationMatrix);
+            that.world = WaveEngineJS.multiply(rotationMatrix, that.world);
             that.refreshedBoudingBox = false;
         };
 
-        this.ChangePosition = function (x, y, z) {
+        this.changePosition = function (x, y, z) {
             that.position[0] = x;
             that.position[1] = y;
             that.position[2] = z;
-            that.RefreshWorld();
+            that.refreshWorld();
         };
 
-        this.ChangeRotation = function (x, y, z) {
+        this.changeRotation = function (x, y, z) {
             that.rotation[0] = x;
             that.rotation[1] = y;
             that.rotation[2] = z;
-            that.RefreshWorld();
+            that.refreshWorld();
         };
 
-        this.ChangeScale = function (x, y, z) {
+        this.changeScale = function (x, y, z) {
             that.scale[0] = x;
             that.scale[1] = y;
             that.scale[2] = z;
-            that.RefreshWorld();
+            that.refreshWorld();
         };
 
-        this.RefreshBoundingBox = function (vectors) {
+        this.refreshBoundingBox = function (vectors) {
             if (!that.refreshedBoudingBox) {
                 var vector3 = [];
                 vector3[0] = Number.MAX_VALUE;
@@ -1142,23 +1136,23 @@ var WaveEngineJS = {
                 var l = vectors.length;
                 for (var i = 0; i < l; i++) {
                     var vector4 = vectors[i];
-                    vector3 = WaveEngineJS.Min(vector3, vector4);
-                    vector2 = WaveEngineJS.Max(vector2, vector4);
+                    vector3 = WaveEngineJS.min(vector3, vector4);
+                    vector2 = WaveEngineJS.max(vector2, vector4);
                 }
 
-                that.boundingBox.min = vector3;
-                that.boundingBox.max = vector2;
+                that.BoundingBox.min = vector3;
+                that.BoundingBox.max = vector2;
                 that.refreshedBoudingBox = true;
             }
         };
 
-        this.GetDistanceToCamera = function (vector) {
+        this.getDistanceToCamera = function (vector) {
             return Math.sqrt(((vector[0] - that.position[0]) * (vector[0] - that.position[0])) + ((vector[1] - that.position[1]) * (vector[1] - that.position[1])) + ((vector[2] - that.position[2]) * (vector[2] - that.position[2])));
         };
     },
 
 
-    GroupModel:function (id) {
+    groupModel:function (id) {
         var that = this;
         this.id = id;
         this.models = new Array();
@@ -1166,53 +1160,53 @@ var WaveEngineJS = {
         this.position = [0, 0, 0];
         this.rotation = [0, 0, 0];
         this.scale = [1, 1, 1];
-        this.boundingBox = new WaveEngineJS.BoundingBox();
+        this.BoundingBox = new WaveEngineJS.BoundingBox();
         this.refreshedBoudingBox = false;
 
-        this.AddModel = function (model) {
+        this.addModel = function (model) {
             that.models[that.models.length] = model;
         };
 
-        this.ChangePosition = function (x, y, z) {
+        this.changePosition = function (x, y, z) {
             that.position[0] = x;
             that.position[1] = y;
             that.position[2] = z;
-            that.RefreshWorld();
+            that.refreshWorld();
         };
 
-        this.ChangeRotation = function (x, y, z) {
+        this.changeRotation = function (x, y, z) {
             that.rotation[0] = x;
             that.rotation[1] = y;
             that.rotation[2] = z;
-            that.RefreshWorld();
+            that.refreshWorld();
         };
 
-        this.ChangeScale = function (x, y, z) {
+        this.changeScale = function (x, y, z) {
             that.scale[0] = x;
             that.scale[1] = y;
             that.scale[2] = z;
-            that.RefreshWorld();
+            that.refreshWorld();
         };
 
-        this.RefreshWorld = function () {
-            var rotationMatrix = WaveEngineJS.CreateFromYawPitchRoll(that.rotation[1], that.rotation[0], that.rotation[2]);
-            var scaleMatrix = WaveEngineJS.CreateScale(that.scale[0], that.scale[1], that.scale[2]);
-            var translationMatrix = WaveEngineJS.CreateTranslation(that.position);
+        this.refreshWorld = function () {
+            var rotationMatrix = WaveEngineJS.createFromYawPitchRoll(that.rotation[1], that.rotation[0], that.rotation[2]);
+            var scaleMatrix = WaveEngineJS.createScale(that.scale[0], that.scale[1], that.scale[2]);
+            var translationMatrix = WaveEngineJS.createTranslation(that.position);
 
-            that.world = WaveEngineJS.Multiply(scaleMatrix, translationMatrix);
-            that.world = WaveEngineJS.Multiply(rotationMatrix, that.world);
+            that.world = WaveEngineJS.multiply(scaleMatrix, translationMatrix);
+            that.world = WaveEngineJS.multiply(rotationMatrix, that.world);
 
             var models = that.models;
             var l = models.length;
             for (var i = 0; i < l; i++) {
-                models[i].RefreshWorld();
+                models[i].refreshWorld();
                 var world = models[i].world;
-                models[i].world = WaveEngineJS.Multiply(world, that.world);
+                models[i].world = WaveEngineJS.multiply(world, that.world);
             }
             that.refreshedBoudingBox = false;
         };
 
-        this.RefreshBoundingBox = function (vectors) {
+        this.refreshBoundingBox = function (vectors) {
             if (!that.refreshedBoudingBox) {
                 var vector3 = [];
                 vector3[0] = Number.MAX_VALUE;
@@ -1227,17 +1221,17 @@ var WaveEngineJS = {
                 var l = vectors.length;
                 for (var i = 0; i < l; i++) {
                     var vector4 = vectors[i];
-                    vector3 = WaveEngineJS.Min(vector3, vector4);
-                    vector2 = WaveEngineJS.Max(vector2, vector4);
+                    vector3 = WaveEngineJS.min(vector3, vector4);
+                    vector2 = WaveEngineJS.max(vector2, vector4);
                 }
 
-                that.boundingBox.min = vector3;
-                that.boundingBox.max = vector2;
+                that.BoundingBox.min = vector3;
+                that.BoundingBox.max = vector2;
                 that.refreshedBoudingBox = true;
             }
         };
 
-        this.GetDistanceToCamera = function (vector) {
+        this.getDistanceToCamera = function (vector) {
             return Math.sqrt(((vector[0] - that.position[0]) * (vector[0] - that.position[0])) + ((vector[1] - that.position[1]) * (vector[1] - that.position[1])) + ((vector[2] - that.position[2]) * (vector[2] - that.position[2])));
         };
     },
@@ -1250,7 +1244,6 @@ var WaveEngineJS = {
      * Dual licensed under the MIT (MIT-LICENSE.txt)
      * and GPL (GPL-LICENSE.txt) licenses.
      *
-     * http://docs.jquery.com/
      */
 
 
@@ -1265,10 +1258,10 @@ var WaveEngineJS = {
         this.groupModels = new Array();
         this.camera = new WaveEngineJS.Camera(canvas.width, canvas.height);
         this.light = [150, 150, 150];
-        WaveEngineJS.Invert(this.light);
+        WaveEngineJS.invert(this.light);
         this.ambientColor = [47, 79, 79];
-        this.shadowMatrix = WaveEngineJS.CreateShadowMatrix([0, 1, 0], this.light, 0);
-        WaveEngineJS.Normalize(this.light);
+        this.shadowMatrix = WaveEngineJS.createShadowMatrix([0, 1, 0], this.light, 0);
+        WaveEngineJS.normalize(this.light);
         this.context = null;
         try {
             this.context = canvas.getContext("2d");
@@ -1283,37 +1276,37 @@ var WaveEngineJS = {
         this.WIRE = "WIRE";
         this.SOLID = "SOLID";
 
-        this.AddCamera = function (camera) {
+        this.addCamera = function (camera) {
             that.camera = camera;
         };
 
-        this.AddModel = function (model) {
+        this.addModel = function (model) {
             var position = that.models.length;
             that.models[position] = model;
             return position;
         };
 
-        this.AddGroupModel = function (groupModel) {
+        this.addGroupModel = function (groupModel) {
             var position = that.groupModels.length;
             that.groupModels[position] = groupModel;
             return position;
         };
 
-        this.ChangeLight = function (x, y, z) {
+        this.changeLight = function (x, y, z) {
             that.light[0] = x;
             that.light[1] = y;
             that.light[2] = z;
-            WaveEngineJS.Invert(that.light);
-            that.shadowMatrix = WaveEngineJS.CreateShadowMatrix([0, 1, 0], that.light, 0);
-            WaveEngineJS.Normalize(that.light);
+            WaveEngineJS.invert(that.light);
+            that.shadowMatrix = WaveEngineJS.createShadowMatrix([0, 1, 0], that.light, 0);
+            WaveEngineJS.normalize(that.light);
         };
 
-        this.RenderDebugLines = function (model) {
-            var corners = model.boundingBox.GetConers();
+        this.renderDebugLines = function (model) {
+            var corners = model.BoundingBox.GetConers();
             var vcorners = new Array();
             var l = vcorners.length;
             for (var j = 0; j < l; j++) {
-                vcorners[j] = WaveEngineJS.Convert(corners[j], that.camera.viewproj, that.width, that.height);
+                vcorners[j] = WaveEngineJS.convert(corners[j], that.camera.viewproj, that.width, that.height);
             }
 
             that.context.beginPath();
@@ -1342,9 +1335,9 @@ var WaveEngineJS = {
             that.context.closePath();
         };
 
-        this.Render = function (type) {
-            that.ClearScreen();
-            var cp = that.camera.GetPosition();
+        this.render = function (type) {
+            that.clearScreen();
+            var cp = that.camera.getPosition();
             var models = that.models;
             var groupModels = that.groupModels;
             var preSortModels = new Array();
@@ -1353,16 +1346,16 @@ var WaveEngineJS = {
             var sortGroupModes;
             var l = models.length;
             for (var i = 0; i < l; i++) {
-                preSortModels[i] = { d:(models[i].GetDistanceToCamera(cp) * 1000), model:models[i] };
+                preSortModels[i] = { d:(models[i].getDistanceToCamera(cp) * 1000), model:models[i] };
             }
 
             l = groupModels.length;
             for (var i = 0; i < l; i++) {
-                preSortGroupModels[i] = { d:groupModels[i].GetDistanceToCamera(cp), groupModel:groupModels[i] };
+                preSortGroupModels[i] = { d:groupModels[i].getDistanceToCamera(cp), groupModel:groupModels[i] };
             }
 
-            sortModels = WaveEngineJS.SortModels(preSortModels);
-            sortGroupModes = WaveEngineJS.SortModels(preSortGroupModels);
+            sortModels = WaveEngineJS.sortModels(preSortModels);
+            sortGroupModes = WaveEngineJS.sortModels(preSortGroupModels);
 
             l = sortModels.length;
             for (var i = 0; i < l; i++) {
@@ -1371,30 +1364,30 @@ var WaveEngineJS = {
                 var vertices = new Array();
                 var ll = model.vertices.length;
                 for (var j = 0; j < ll; j++) {
-                    vertices[j] = WaveEngineJS.TransformV4Matrix(model.vertices[j].v3D, model.world);
+                    vertices[j] = WaveEngineJS.transformV4Matrix(model.vertices[j].v3D, model.world);
                 }
 
-                model.RefreshBoundingBox(vertices);
+                model.refreshBoundingBox(vertices);
 
                 if (that.showDebugLines) {
-                    that.RenderDebugLines(model);
+                    that.renderDebugLines(model);
                 }
                 switch (type) {
                     case that.POINTS:
-                        that.DrawPoints(vertices);
+                        that.drawPoints(vertices);
                         break;
                     case that.WIRE:
                         that.context.beginPath();
-                        that.DrawWire(vertices, model);
+                        that.drawWire(vertices, model);
                         that.context.closePath();
                         break;
                     case that.SOLID:
-                        that.DrawShadow(vertices, model);
-                        that.DrawSolid(vertices, model);
-                        that.DrawWire(vertices, model);
+                        that.drawShadow(vertices, model);
+                        that.drawSolid(vertices, model);
+                        that.drawWire(vertices, model);
                         break;
                     default:
-                        that.DrawPoints(vertices);
+                        that.drawPoints(vertices);
                         break;
                 }
             }
@@ -1410,48 +1403,48 @@ var WaveEngineJS = {
                     var model = models[k];
                     var vertices = new Array();
                     for (var j = 0; j < model.vertices.length; j++) {
-                        vertices[j] = WaveEngineJS.TransformV4Matrix(model.vertices[j].v3D, model.world);
+                        vertices[j] = WaveEngineJS.transformV4Matrix(model.vertices[j].v3D, model.world);
                         totalVertices[totalVertices.length] = vertices[j];
                     }
                     modelsVertices[k] = vertices;
                 }
 
-                groupModel.RefreshBoundingBox(totalVertices);
+                groupModel.refreshBoundingBox(totalVertices);
                 if (that.showDebugLines) {
-                    that.RenderDebugLines(groupModel);
+                    that.renderDebugLines(groupModel);
                     type = that.WIRE;
                 }
 
                 for (var k = 0; k < ll; k++) {
                     switch (type) {
                         case that.POINTS:
-                            that.DrawPoints(vertices);
+                            that.drawPoints(vertices);
                             break;
                         case that.WIRE:
                             that.context.beginPath();
                             that.context.strokeStyle = "black";
                             that.context.beginPath();
-                            that.DrawWire(modelsVertices[k], models[k]);
+                            that.drawWire(modelsVertices[k], models[k]);
                             that.context.closePath();
                             break;
                         case that.SOLID:
-                            that.DrawShadow(modelsVertices[k], models[k]);
-                            that.DrawSolid(modelsVertices[k], models[k]);
-                            that.DrawWire(modelsVertices[k], models[k]);
+                            that.drawShadow(modelsVertices[k], models[k]);
+                            that.drawSolid(modelsVertices[k], models[k]);
+                            that.drawWire(modelsVertices[k], models[k]);
                             break;
                         default:
-                            that.DrawPoints(vertices);
+                            that.drawPoints(vertices);
                             break;
                     }
                 }
             }
         };
 
-        this.ClearScreen = function () {
+        this.clearScreen = function () {
             that.context.clearRect(0, 0, that.width, that.height);
         };
 
-        this.DrawPoints = function (vertices) {
+        this.drawPoints = function (vertices) {
             that.context.beginPath();
             that.context.strokeStyle = "black";
             for (var i = 0; i < vertices.length; i++) {
@@ -1462,9 +1455,9 @@ var WaveEngineJS = {
             that.context.closePath();
         };
 
-        this.DrawWire = function (vertices, model) {
+        this.drawWire = function (vertices, model) {
             var indexes = model.index;
-            var pc = that.camera.GetPosition();
+            var pc = that.camera.getPosition();
             var borderColor = model.borderColor;
             that.context.strokeStyle = rgba + borderColor[0] + comma + borderColor[1] + comma + borderColor[2] + comma + borderColor[3] + close;
             for (var i = 0; i < indexes.length / 3; i++) {
@@ -1474,19 +1467,19 @@ var WaveEngineJS = {
                 var p2 = vertices[indexes[index + 1]];
                 var p3 = vertices[indexes[index + 2]];
 
-                var v1 = WaveEngineJS.SubstractV3(p1, p2);
-                var v2 = WaveEngineJS.SubstractV3(p3, p2);
+                var v1 = WaveEngineJS.substractV3(p1, p2);
+                var v2 = WaveEngineJS.substractV3(p3, p2);
 
-                var n = WaveEngineJS.CrossV3(v1, v2);
+                var n = WaveEngineJS.crossV3(v1, v2);
 
-                var c = WaveEngineJS.SubstractV3(pc, p1);
+                var c = WaveEngineJS.substractV3(pc, p1);
 
-                var tita = WaveEngineJS.DotV3(c, n);
+                var tita = WaveEngineJS.dotV3(c, n);
 
                 if (!model.backfaceCulling || tita < 0) {
-                    var vertex1 = WaveEngineJS.Convert(p1, that.camera.viewproj, that.width, that.height);
-                    var vertex2 = WaveEngineJS.Convert(p2, that.camera.viewproj, that.width, that.height);
-                    var vertex3 = WaveEngineJS.Convert(p3, that.camera.viewproj, that.width, that.height);
+                    var vertex1 = WaveEngineJS.convert(p1, that.camera.viewproj, that.width, that.height);
+                    var vertex2 = WaveEngineJS.convert(p2, that.camera.viewproj, that.width, that.height);
+                    var vertex3 = WaveEngineJS.convert(p3, that.camera.viewproj, that.width, that.height);
                     that.context.moveTo(vertex1[0], vertex1[1]);
                     that.context.lineTo(vertex2[0], vertex2[1]);
                     that.context.lineTo(vertex3[0], vertex3[1]);
@@ -1495,30 +1488,30 @@ var WaveEngineJS = {
 
             }
 
-            var poligons = model.poligons;
-            var l = poligons.length;
+            var polygons = model.poligons;
+            var l = polygons.length;
             for (var i = 0; i < l; i++) {
-                var poligon = poligons[i];
+                var polygon = polygons[i];
                 var index = 0;
-                var p1 = vertices[poligon[index]];
-                var p2 = vertices[poligon[index + 1]];
-                var p3 = vertices[poligon[index + 2]];
+                var p1 = vertices[polygon[index]];
+                var p2 = vertices[polygon[index + 1]];
+                var p3 = vertices[polygon[index + 2]];
 
-                var v1 = WaveEngineJS.SubstractV3(p1, p2);
-                var v2 = WaveEngineJS.SubstractV3(p3, p2);
+                var v1 = WaveEngineJS.substractV3(p1, p2);
+                var v2 = WaveEngineJS.substractV3(p3, p2);
 
-                var n = WaveEngineJS.CrossV3(v1, v2);
+                var n = WaveEngineJS.crossV3(v1, v2);
 
-                var c = WaveEngineJS.SubstractV3(pc, p1);
+                var c = WaveEngineJS.substractV3(pc, p1);
 
-                var tita = WaveEngineJS.DotV3(c, n);
+                var tita = WaveEngineJS.dotV3(c, n);
 
                 if (!model.backfaceCulling || tita < 0) {
-                    var orig = WaveEngineJS.Convert(vertices[poligon[0]], that.camera.viewproj, that.width, that.height);
+                    var orig = WaveEngineJS.convert(vertices[polygon[0]], that.camera.viewproj, that.width, that.height);
                     that.context.moveTo(orig[0], orig[1]);
-                    var ll = poligon.length;
+                    var ll = polygon.length;
                     for (var j = 1; j < ll; j++) {
-                        var aux = WaveEngineJS.Convert(vertices[poligon[j]], that.camera.viewproj, that.width, that.height);
+                        var aux = WaveEngineJS.convert(vertices[polygon[j]], that.camera.viewproj, that.width, that.height);
                         that.context.lineTo(aux[0], aux[1]);
                     }
                     that.context.lineTo(orig[0], orig[1]);
@@ -1527,11 +1520,11 @@ var WaveEngineJS = {
             that.context.stroke();
         };
 
-        this.DrawSolid = function (vertices, model) {
+        this.drawSolid = function (vertices, model) {
             var ambientColor = that.ambientColor;
             var context = that.context;
             var indexes = model.index;
-            var pc = that.camera.GetPosition();
+            var pc = that.camera.getPosition();
             var viewProj = that.camera.viewproj;
             var hasIllumination = model.hasIllumination;
             if (!hasIllumination) {
@@ -1548,14 +1541,14 @@ var WaveEngineJS = {
                 var p2 = vertices[indexes[index + 1]];
                 var p3 = vertices[indexes[index + 2]];
 
-                var v1 = WaveEngineJS.SubstractV3(p1, p2);
-                var v2 = WaveEngineJS.SubstractV3(p3, p2);
+                var v1 = WaveEngineJS.substractV3(p1, p2);
+                var v2 = WaveEngineJS.substractV3(p3, p2);
 
-                var n = WaveEngineJS.CrossV3(v1, v2);
-                WaveEngineJS.Normalize(n);
-                var c = WaveEngineJS.SubstractV3(pc, p1);
+                var n = WaveEngineJS.crossV3(v1, v2);
+                WaveEngineJS.normalize(n);
+                var c = WaveEngineJS.substractV3(pc, p1);
 
-                var tita = WaveEngineJS.DotV3(c, n);
+                var tita = WaveEngineJS.dotV3(c, n);
 
                 if (!model.backfaceCulling || tita < 0) {
                     if (hasIllumination) {
@@ -1565,7 +1558,7 @@ var WaveEngineJS = {
                         var modelColorB = modelColor[2];
                         var modelColorA = modelColor[3];
                         var borderColor = model.borderColor;
-                        var sat = WaveEngineJS.DotV3(that.light, n);
+                        var sat = WaveEngineJS.dotV3(that.light, n);
                         if (sat < 0) {
                             sat = 0;
                         } else if (sat > 1) {
@@ -1583,9 +1576,9 @@ var WaveEngineJS = {
                     }
                     context.beginPath();
 
-                    var vertex1 = WaveEngineJS.Convert(p1, viewProj, w, h);
-                    var vertex2 = WaveEngineJS.Convert(p2, viewProj, w, h);
-                    var vertex3 = WaveEngineJS.Convert(p3, viewProj, w, h);
+                    var vertex1 = WaveEngineJS.convert(p1, viewProj, w, h);
+                    var vertex2 = WaveEngineJS.convert(p2, viewProj, w, h);
+                    var vertex3 = WaveEngineJS.convert(p3, viewProj, w, h);
                     var v10 = Math.floor(vertex1[0]);
                     var v11 = Math.floor(vertex1[1]);
                     context.moveTo(v10, v11);
@@ -1597,27 +1590,27 @@ var WaveEngineJS = {
                 }
             }
 
-            var poligons = model.poligons;
+            var polygons = model.poligons;
 
-            for (var i = poligons.length; i--;) {
-                var poligon = poligons[i];
+            for (var i = polygons.length; i--;) {
+                var polygon = polygons[i];
                 var index = 0;
-                var p1 = vertices[poligon[index]];
-                var p2 = vertices[poligon[index + 1]];
-                var p3 = vertices[poligon[index + 2]];
+                var p1 = vertices[polygon[index]];
+                var p2 = vertices[polygon[index + 1]];
+                var p3 = vertices[polygon[index + 2]];
 
-                var v1 = WaveEngineJS.SubstractV3(p1, p2);
-                var v2 = WaveEngineJS.SubstractV3(p3, p2);
+                var v1 = WaveEngineJS.substractV3(p1, p2);
+                var v2 = WaveEngineJS.substractV3(p3, p2);
 
-                var n = WaveEngineJS.CrossV3(v1, v2);
+                var n = WaveEngineJS.crossV3(v1, v2);
 
-                var c = WaveEngineJS.SubstractV3(pc, p1);
+                var c = WaveEngineJS.substractV3(pc, p1);
 
-                var tita = WaveEngineJS.DotV3(c, n);
+                var tita = WaveEngineJS.dotV3(c, n);
 
                 if (!model.backfaceCulling || tita < 0) {
                     if (hasIllumination) {
-                        var sat = WaveEngineJS.DotV3(that.light, n);
+                        var sat = WaveEngineJS.dotV3(that.light, n);
                         if (sat < 0) {
                             sat = 0;
                         } else if (sat > 1) {
@@ -1638,11 +1631,11 @@ var WaveEngineJS = {
                     }
 
                     context.beginPath();
-                    var orig = WaveEngineJS.Convert(vertices[poligon[0]], viewProj, w, h);
+                    var orig = WaveEngineJS.convert(vertices[polygon[0]], viewProj, w, h);
                     context.moveTo(orig[0], orig[1]);
-                    var ll = poligon.length;
+                    var ll = polygon.length;
                     for (var j = 1; j < ll; j++) {
-                        var aux = WaveEngineJS.Convert(vertices[poligon[j]], viewProj, w, h);
+                        var aux = WaveEngineJS.convert(vertices[polygon[j]], viewProj, w, h);
                         context.lineTo(aux[0], aux[1]);
                     }
                     context.lineTo(orig[0], orig[1]);
@@ -1652,9 +1645,9 @@ var WaveEngineJS = {
             }
         };
 
-        this.DrawShadow = function (vertices, model) {
+        this.drawShadow = function (vertices, model) {
             if (model.hasShadow) {
-                var shadowMatrix = WaveEngineJS.Multiply(that.shadowMatrix, that.camera.viewproj);
+                var shadowMatrix = WaveEngineJS.multiply(that.shadowMatrix, that.camera.viewproj);
                 that.context.fillStyle = "rgb(0,0,0)";
                 var indexes = model.index;
                 for (var i = 0; i < indexes.length / 3; i++) {
@@ -1665,9 +1658,9 @@ var WaveEngineJS = {
                     var p3 = vertices[indexes[index + 2]];
                     that.context.beginPath();
 
-                    var vertex1 = WaveEngineJS.Convert(p1, shadowMatrix, that.width, that.height);
-                    var vertex2 = WaveEngineJS.Convert(p2, shadowMatrix, that.width, that.height);
-                    var vertex3 = WaveEngineJS.Convert(p3, shadowMatrix, that.width, that.height);
+                    var vertex1 = WaveEngineJS.convert(p1, shadowMatrix, that.width, that.height);
+                    var vertex2 = WaveEngineJS.convert(p2, shadowMatrix, that.width, that.height);
+                    var vertex3 = WaveEngineJS.convert(p3, shadowMatrix, that.width, that.height);
                     that.context.moveTo(Math.floor(vertex1[0]), Math.floor(vertex1[1]));
                     that.context.lineTo(Math.floor(vertex2[0]), Math.floor(vertex2[1]));
                     that.context.lineTo(Math.floor(vertex3[0]), Math.floor(vertex3[1]));
@@ -1676,17 +1669,17 @@ var WaveEngineJS = {
                     that.context.fill();
                 }
 
-                var poligons = model.poligons;
-                var l = poligons.length;
+                var polygons = model.poligons;
+                var l = polygons.length;
                 for (var i = 0; i < l; i++) {
-                    var poligon = poligons[i];
-                    var orig = WaveEngineJS.Convert(vertices[poligon[0]], shadowMatrix, that.width, that.height);
+                    var polygon = polygons[i];
+                    var orig = WaveEngineJS.convert(vertices[polygon[0]], shadowMatrix, that.width, that.height);
 
                     that.context.beginPath();
                     that.context.moveTo(orig[0], orig[1]);
-                    var ll = poligon.length;
+                    var ll = polygon.length;
                     for (var j = 1; j < ll; j++) {
-                        var aux = WaveEngineJS.Convert(vertices[poligon[j]], shadowMatrix, that.width, that.height);
+                        var aux = WaveEngineJS.convert(vertices[polygon[j]], shadowMatrix, that.width, that.height);
                         that.context.lineTo(aux[0], aux[1]);
                     }
                     that.context.lineTo(orig[0], orig[1]);
@@ -1696,25 +1689,25 @@ var WaveEngineJS = {
             }
         };
 
-        this.GetModelInMap = function (position) {
+        this.getModelInMap = function (position) {
             var nearSource = [position[0], position[1], 0];
             var farSource = [position[0], position[1], 1];
             var camera = that.camera;
             var identity = new WaveEngineJS.MatrixIdentity();
-            var nearPoint = camera.Unproject(nearSource, camera.view, camera.projection, identity);
-            var farPoint = camera.Unproject(farSource, camera.view, camera.projection, identity);
-            var direction = WaveEngineJS.SubstractV4(farPoint, nearPoint);
+            var nearPoint = camera.unproject(nearSource, camera.view, camera.projection, identity);
+            var farPoint = camera.unproject(farSource, camera.view, camera.projection, identity);
+            var direction = WaveEngineJS.substractV4(farPoint, nearPoint);
 
-            WaveEngineJS.Normalize(direction);
+            WaveEngineJS.normalize(direction);
 
-            var r = new WaveEngineJS.Ray(nearPoint, direction);
+            var r = new WaveEngineJS.ray(nearPoint, direction);
             var minDist = Number.MAX_VALUE;
             var dist;
             var found = null;
             var l = that.model.length;
             for (var i = 0; i < l; i++) {
                 var model = that.models[i];
-                dist = model.boundingBox.Intersects(r);
+                dist = model.BoundingBox.Intersects(r);
 
                 if (dist != null) {
                     if (dist < minDist) {
@@ -1727,25 +1720,25 @@ var WaveEngineJS = {
             return found;
         };
 
-        this.GetGroupModelInMap = function (position) {
+        this.getGroupModelInMap = function (position) {
             var nearSource = [position[0], position[1], 0];
             var farSource = [position[0], position[1], 1];
             var camera = that.camera;
             var identity = new WaveEngineJS.MatrixIdentity();
-            var nearPoint = camera.Unproject(nearSource, camera.view, camera.projection, identity);
-            var farPoint = camera.Unproject(farSource, camera.view, camera.projection, identity);
-            var direction = WaveEngineJS.SubstractV4(farPoint, nearPoint);
+            var nearPoint = camera.unproject(nearSource, camera.view, camera.projection, identity);
+            var farPoint = camera.unproject(farSource, camera.view, camera.projection, identity);
+            var direction = WaveEngineJS.substractV4(farPoint, nearPoint);
 
-            WaveEngineJS.Normalize(direction);
+            WaveEngineJS.normalize(direction);
 
-            var r = new WaveEngineJS.Ray(nearPoint, direction);
+            var r = new WaveEngineJS.ray(nearPoint, direction);
             var minDist = Number.MAX_VALUE;
             var dist;
             var found = null;
             var l = that.groupModels.length;
             for (var i = 0; i < l; i++) {
                 var model = that.groupModels[i];
-                dist = model.boundingBox.Intersects(r);
+                dist = model.BoundingBox.Intersects(r);
 
                 if (dist != null) {
                     if (dist < minDist) {
@@ -1760,7 +1753,7 @@ var WaveEngineJS = {
     },
 
 
-    SortModels:function (preSortModels) {
+    sortModels:function (preSortModels) {
         if (preSortModels.length <= 1) {
             return preSortModels;
         }
@@ -1775,6 +1768,6 @@ var WaveEngineJS = {
                 greater.push(preSortModels[x]);
             }
         }
-        return [].concat(WaveEngineJS.SortModels(greater), pivotElem, WaveEngineJS.SortModels(less));
+        return [].concat(WaveEngineJS.sortModels(greater), pivotElem, WaveEngineJS.sortModels(less));
     }
 };
