@@ -32,24 +32,40 @@ var WaveEngineJS = {
      */
     Matrix:function () {
         var that = this;
-        this.position = arguments;
+        this[0] = 0;
+        this[1] = 0;
+        this[2] = 0;
+        this[3] = 0;
+        this[4] = 0;
+        this[5] = 0;
+        this[6] = 0;
+        this[7] = 0;
+        this[8] = 0;
+        this[9] = 0;
+        this[10] = 0;
+        this[11] = 0;
+        this[12] = 0;
+        this[13] = 0;
+        this[14] = 0;
+        this[15] = 0;
+        //this.position = arguments;
         /**
-         * M11 = position[0]
-         * M12 = position[1]
-         * M13 = position[2]
-         * M14 = position[3]
-         * M21 = position[4]
-         * M22 = position[5]
-         * M23 = position[6]
-         * M24 = position[7]
-         * M31 = position[8]
-         * M32 = position[9]
-         * M33 = position[10]
-         * M34 = position[11]
-         * M41 = position[12]
-         * M42 = position[13]
-         * M43 = position[14]
-         * M44 = position[15]
+         * M11 = this[0]
+         * M12 = this[1]
+         * M13 = this[2]
+         * M14 = this[3]
+         * M21 = this[4]
+         * M22 = this[5]
+         * M23 = this[6]
+         * M24 = this[7]
+         * M31 = this[8]
+         * M32 = this[9]
+         * M33 = this[10]
+         * M34 = this[11]
+         * M41 = this[12]
+         * M42 = this[13]
+         * M43 = this[14]
+         * M44 = this[15]
          */
 
 
@@ -58,22 +74,22 @@ var WaveEngineJS = {
          * @this {WaveEngineJS.Matrix}
          */
         this.invert = function () {
-            var num5 = that.position[0];
-            var num4 = that.position[1];
-            var num3 = that.position[2];
-            var num2 = that.position[3];
-            var num9 = that.position[4];
-            var num8 = that.position[5];
-            var num7 = that.position[6];
-            var num6 = that.position[7];
-            var num17 = that.position[8];
-            var num16 = that.position[9];
-            var num15 = that.position[10];
-            var num14 = that.position[11];
-            var num13 = that.position[12];
-            var num12 = that.position[13];
-            var num11 = that.position[14];
-            var num10 = that.position[15];
+            var num5 = that[0];
+            var num4 = that[1];
+            var num3 = that[2];
+            var num2 = that[3];
+            var num9 = that[4];
+            var num8 = that[5];
+            var num7 = that[6];
+            var num6 = that[7];
+            var num17 = that[8];
+            var num16 = that[9];
+            var num15 = that[10];
+            var num14 = that[11];
+            var num13 = that[12];
+            var num12 = that[13];
+            var num11 = that[14];
+            var num10 = that[15];
             var num23 = (num15 * num10) - (num14 * num11);
             var num22 = (num16 * num10) - (num14 * num12);
             var num21 = (num16 * num11) - (num15 * num12);
@@ -85,34 +101,34 @@ var WaveEngineJS = {
             var num37 = ((num9 * num22) - (num8 * num20)) + (num6 * num18);
             var num36 = -(((num9 * num21) - (num8 * num19)) + (num7 * num18));
             var num = 1 / ((((num5 * num39) + (num4 * num38)) + (num3 * num37)) + (num2 * num36));
-            that.position[0] = num39 * num;
-            that.position[4] = num38 * num;
-            that.position[8] = num37 * num;
-            that.position[12] = num36 * num;
-            that.position[1] = -(((num4 * num23) - (num3 * num22)) + (num2 * num21)) * num;
-            that.position[5] = (((num5 * num23) - (num3 * num20)) + (num2 * num19)) * num;
-            that.position[9] = -(((num5 * num22) - (num4 * num20)) + (num2 * num18)) * num;
-            that.position[13] = (((num5 * num21) - (num4 * num19)) + (num3 * num18)) * num;
+            that[0] = num39 * num;
+            that[4] = num38 * num;
+            that[8] = num37 * num;
+            that[12] = num36 * num;
+            that[1] = -(((num4 * num23) - (num3 * num22)) + (num2 * num21)) * num;
+            that[5] = (((num5 * num23) - (num3 * num20)) + (num2 * num19)) * num;
+            that[9] = -(((num5 * num22) - (num4 * num20)) + (num2 * num18)) * num;
+            that[13] = (((num5 * num21) - (num4 * num19)) + (num3 * num18)) * num;
             var num35 = (num7 * num10) - (num6 * num11);
             var num34 = (num8 * num10) - (num6 * num12);
             var num33 = (num8 * num11) - (num7 * num12);
             var num32 = (num9 * num10) - (num6 * num13);
             var num31 = (num9 * num11) - (num7 * num13);
             var num30 = (num9 * num12) - (num8 * num13);
-            that.position[2] = (((num4 * num35) - (num3 * num34)) + (num2 * num33)) * num;
-            that.position[6] = -(((num5 * num35) - (num3 * num32)) + (num2 * num31)) * num;
-            that.position[10] = (((num5 * num34) - (num4 * num32)) + (num2 * num30)) * num;
-            that.position[14] = -(((num5 * num33) - (num4 * num31)) + (num3 * num30)) * num;
+            that[2] = (((num4 * num35) - (num3 * num34)) + (num2 * num33)) * num;
+            that[6] = -(((num5 * num35) - (num3 * num32)) + (num2 * num31)) * num;
+            that[10] = (((num5 * num34) - (num4 * num32)) + (num2 * num30)) * num;
+            that[14] = -(((num5 * num33) - (num4 * num31)) + (num3 * num30)) * num;
             var num29 = (num7 * num14) - (num6 * num15);
             var num28 = (num8 * num14) - (num6 * num16);
             var num27 = (num8 * num15) - (num7 * num16);
             var num26 = (num9 * num14) - (num6 * num17);
             var num25 = (num9 * num15) - (num7 * num17);
             var num24 = (num9 * num16) - (num8 * num17);
-            that.position[3] = -(((num4 * num29) - (num3 * num28)) + (num2 * num27)) * num;
-            that.position[7] = (((num5 * num29) - (num3 * num26)) + (num2 * num25)) * num;
-            that.position[11] = -(((num5 * num28) - (num4 * num26)) + (num2 * num24)) * num;
-            that.position[15] = (((num5 * num27) - (num4 * num25)) + (num3 * num24)) * num;
+            that[3] = -(((num4 * num29) - (num3 * num28)) + (num2 * num27)) * num;
+            that[7] = (((num5 * num29) - (num3 * num26)) + (num2 * num25)) * num;
+            that[11] = -(((num5 * num28) - (num4 * num26)) + (num2 * num24)) * num;
+            that[15] = (((num5 * num27) - (num4 * num25)) + (num3 * num24)) * num;
         };
 
         return this;
@@ -125,23 +141,22 @@ var WaveEngineJS = {
      */
     MatrixIdentity:function () {
         var matrix = new WaveEngineJS.Matrix();
-        var position = matrix.position;
-        position[0] = 1;
-        position[1] = 0;
-        position[2] = 0;
-        position[3] = 0;
-        position[4] = 0;
-        position[5] = 1;
-        position[6] = 0;
-        position[7] = 0;
-        position[8] = 0;
-        position[9] = 0;
-        position[10] = 1;
-        position[11] = 0;
-        position[12] = 0;
-        position[13] = 0;
-        position[14] = 0;
-        position[15] = 1;
+        matrix[0] = 1;
+        matrix[1] = 0;
+        matrix[2] = 0;
+        matrix[3] = 0;
+        matrix[4] = 0;
+        matrix[5] = 1;
+        matrix[6] = 0;
+        matrix[7] = 0;
+        matrix[8] = 0;
+        matrix[9] = 0;
+        matrix[10] = 1;
+        matrix[11] = 0;
+        matrix[12] = 0;
+        matrix[13] = 0;
+        matrix[14] = 0;
+        matrix[15] = 1;
         return matrix;
     },
 
@@ -153,23 +168,22 @@ var WaveEngineJS = {
      */
     createTranslation:function (vector3) {
         var matrix = new WaveEngineJS.Matrix();
-        var position = matrix.position;
-        position[0] = 1;
-        position[1] = 0;
-        position[2] = 0;
-        position[3] = 0;
-        position[4] = 0;
-        position[5] = 1;
-        position[6] = 0;
-        position[7] = 0;
-        position[8] = 0;
-        position[9] = 0;
-        position[10] = 1;
-        position[11] = 0;
-        position[12] = vector3[0];
-        position[13] = vector3[1];
-        position[14] = vector3[2];
-        position[15] = 1;
+        matrix[0] = 1;
+        matrix[1] = 0;
+        matrix[2] = 0;
+        matrix[3] = 0;
+        matrix[4] = 0;
+        matrix[5] = 1;
+        matrix[6] = 0;
+        matrix[7] = 0;
+        matrix[8] = 0;
+        matrix[9] = 0;
+        matrix[10] = 1;
+        matrix[11] = 0;
+        matrix[12] = vector3[0];
+        matrix[13] = vector3[1];
+        matrix[14] = vector3[2];
+        matrix[15] = 1;
         return matrix;
     },
 
@@ -183,23 +197,22 @@ var WaveEngineJS = {
      */
     createScale:function (xScale, yScale, zScale) {
         var matrix = new WaveEngineJS.Matrix();
-        var position = matrix.position;
-        position[0] = xScale;
-        position[1] = 0;
-        position[2] = 0;
-        position[3] = 0;
-        position[4] = 0;
-        position[5] = yScale;
-        position[6] = 0;
-        position[7] = 0;
-        position[8] = 0;
-        position[9] = 0;
-        position[10] = zScale;
-        position[11] = 0;
-        position[12] = 0;
-        position[13] = 0;
-        position[14] = 0;
-        position[15] = 1;
+        matrix[0] = xScale;
+        matrix[1] = 0;
+        matrix[2] = 0;
+        matrix[3] = 0;
+        matrix[4] = 0;
+        matrix[5] = yScale;
+        matrix[6] = 0;
+        matrix[7] = 0;
+        matrix[8] = 0;
+        matrix[9] = 0;
+        matrix[10] = zScale;
+        matrix[11] = 0;
+        matrix[12] = 0;
+        matrix[13] = 0;
+        matrix[14] = 0;
+        matrix[15] = 1;
         return matrix;
     },
 
@@ -217,23 +230,23 @@ var WaveEngineJS = {
         var num4 = -plane[1];
         var num3 = -plane[2];
         var num2 = -d;
-        var position = matrix.position;
-        position[0] = (num5 * light[0]) + num;
-        position[1] = num5 * light[1];
-        position[2] = num5 * light[2];
-        position[3] = 0;
-        position[4] = num4 * light[0];
-        position[5] = (num4 * light[1]) + num;
-        position[6] = num4 * light[2];
-        position[7] = 0;
-        position[8] = num3 * light[0];
-        position[9] = num3 * light[1];
-        position[10] = (num3 * light[2]) + num;
-        position[11] = 0;
-        position[12] = num2 * light[0];
-        position[13] = num2 * light[1];
-        position[14] = num2 * light[2];
-        position[15] = num;
+
+        matrix[0] = (num5 * light[0]) + num;
+        matrix[1] = num5 * light[1];
+        matrix[2] = num5 * light[2];
+        matrix[3] = 0;
+        matrix[4] = num4 * light[0];
+        matrix[5] = (num4 * light[1]) + num;
+        matrix[6] = num4 * light[2];
+        matrix[7] = 0;
+        matrix[8] = num3 * light[0];
+        matrix[9] = num3 * light[1];
+        matrix[10] = (num3 * light[2]) + num;
+        matrix[11] = 0;
+        matrix[12] = num2 * light[0];
+        matrix[13] = num2 * light[1];
+        matrix[14] = num2 * light[2];
+        matrix[15] = num;
         return matrix;
     },
 
@@ -250,16 +263,15 @@ var WaveEngineJS = {
         var matrix = new WaveEngineJS.Matrix();
         var num = 1 / Math.tan(fieldOfView * 0.5);
         var num9 = num / aspectRatio;
-        var position = matrix.position;
-        position[0] = num9;
-        position[1] = position[2] = position[3] = 0;
-        position[5] = num;
-        position[4] = position[6] = position[7] = 0;
-        position[8] = position[9] = 0;
-        position[10] = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-        position[11] = -1;
-        position[12] = position[13] = position[15] = 0;
-        position[14] = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
+        matrix[0] = num9;
+        matrix[1] = matrix[2] = matrix[3] = 0;
+        matrix[5] = num;
+        matrix[4] = matrix[6] = matrix[7] = 0;
+        matrix[8] = matrix[9] = 0;
+        matrix[10] = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
+        matrix[11] = -1;
+        matrix[12] = matrix[13] = matrix[15] = 0;
+        matrix[14] = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
         return matrix;
     },
 
@@ -278,23 +290,23 @@ var WaveEngineJS = {
         var vector2 = WaveEngineJS.crossV3(cameraUpVector, vector);
         WaveEngineJS.normalize(vector2);
         var vector3 = WaveEngineJS.crossV3(vector, vector2);
-        var position = matrix.position;
-        position[0] = vector2[0];
-        position[1] = vector3[0];
-        position[2] = vector[0];
-        position[3] = 0;
-        position[4] = vector2[1];
-        position[5] = vector3[1];
-        position[6] = vector[1];
-        position[7] = 0;
-        position[8] = vector2[2];
-        position[9] = vector3[2];
-        position[10] = vector[2];
-        position[11] = 0;
-        position[12] = -WaveEngineJS.dotV3(vector2, cameraPosition);
-        position[13] = -WaveEngineJS.dotV3(vector3, cameraPosition);
-        position[14] = -WaveEngineJS.dotV3(vector, cameraPosition);
-        position[15] = 1;
+
+        matrix[0] = vector2[0];
+        matrix[1] = vector3[0];
+        matrix[2] = vector[0];
+        matrix[3] = 0;
+        matrix[4] = vector2[1];
+        matrix[5] = vector3[1];
+        matrix[6] = vector[1];
+        matrix[7] = 0;
+        matrix[8] = vector2[2];
+        matrix[9] = vector3[2];
+        matrix[10] = vector[2];
+        matrix[11] = 0;
+        matrix[12] = -WaveEngineJS.dotV3(vector2, cameraPosition);
+        matrix[13] = -WaveEngineJS.dotV3(vector3, cameraPosition);
+        matrix[14] = -WaveEngineJS.dotV3(vector, cameraPosition);
+        matrix[15] = 1;
         return matrix;
     },
 
@@ -314,23 +326,23 @@ var WaveEngineJS = {
         var num3 = quaternion[1] * quaternion[3];
         var num2 = quaternion[1] * quaternion[2];
         var num = quaternion[0] * quaternion[3];
-        var position = matrix.position;
-        position[0] = 1 - (2 * (num8 + num7));
-        position[1] = 2 * (num6 + num5);
-        position[2] = 2 * (num4 - num3);
-        position[3] = 0;
-        position[4] = 2 * (num6 - num5);
-        position[5] = 1 - (2 * (num7 + num9));
-        position[6] = 2 * (num2 + num);
-        position[7] = 0;
-        position[8] = 2 * (num4 + num3);
-        position[9] = 2 * (num2 - num);
-        position[10] = 1 - (2 * (num8 + num9));
-        position[11] = 0;
-        position[12] = 0;
-        position[13] = 0;
-        position[14] = 0;
-        position[15] = 1;
+
+        matrix[0] = 1 - (2 * (num8 + num7));
+        matrix[1] = 2 * (num6 + num5);
+        matrix[2] = 2 * (num4 - num3);
+        matrix[3] = 0;
+        matrix[4] = 2 * (num6 - num5);
+        matrix[5] = 1 - (2 * (num7 + num9));
+        matrix[6] = 2 * (num2 + num);
+        matrix[7] = 0;
+        matrix[8] = 2 * (num4 + num3);
+        matrix[9] = 2 * (num2 - num);
+        matrix[10] = 1 - (2 * (num8 + num9));
+        matrix[11] = 0;
+        matrix[12] = 0;
+        matrix[13] = 0;
+        matrix[14] = 0;
+        matrix[15] = 1;
         return matrix;
     },
 
@@ -342,25 +354,22 @@ var WaveEngineJS = {
      */
     multiply:function (matrix1, matrix2) {
         var matrix = new WaveEngineJS.Matrix();
-        var position = matrix.position;
-        var position1 = matrix1.position;
-        var position2 = matrix2.position;
-        position[0] = (((position1[0] * position2[0]) + (position1[1] * position2[4])) + (position1[2] * position2[8])) + (position1[3] * position2[12]);
-        position[1] = (((position1[0] * position2[1]) + (position1[1] * position2[5])) + (position1[2] * position2[9])) + (position1[3] * position2[13]);
-        position[2] = (((position1[0] * position2[2]) + (position1[1] * position2[6])) + (position1[2] * position2[10])) + (position1[3] * position2[14]);
-        position[3] = (((position1[0] * position2[3]) + (position1[1] * position2[7])) + (position1[2] * position2[11])) + (position1[3] * position2[15]);
-        position[4] = (((position1[4] * position2[0]) + (position1[5] * position2[4])) + (position1[6] * position2[8])) + (position1[7] * position2[12]);
-        position[5] = (((position1[4] * position2[1]) + (position1[5] * position2[5])) + (position1[6] * position2[9])) + (position1[7] * position2[13]);
-        position[6] = (((position1[4] * position2[2]) + (position1[5] * position2[6])) + (position1[6] * position2[10])) + (position1[7] * position2[14]);
-        position[7] = (((position1[4] * position2[3]) + (position1[5] * position2[7])) + (position1[6] * position2[11])) + (position1[7] * position2[15]);
-        position[8] = (((position1[8] * position2[0]) + (position1[9] * position2[4])) + (position1[10] * position2[8])) + (position1[11] * position2[12]);
-        position[9] = (((position1[8] * position2[1]) + (position1[9] * position2[5])) + (position1[10] * position2[9])) + (position1[11] * position2[13]);
-        position[10] = (((position1[8] * position2[2]) + (position1[9] * position2[6])) + (position1[10] * position2[10])) + (position1[11] * position2[14]);
-        position[11] = (((position1[8] * position2[3]) + (position1[9] * position2[7])) + (position1[10] * position2[11])) + (position1[11] * position2[15]);
-        position[12] = (((position1[12] * position2[0]) + (position1[13] * position2[4])) + (position1[14] * position2[8])) + (position1[15] * position2[12]);
-        position[13] = (((position1[12] * position2[1]) + (position1[13] * position2[5])) + (position1[14] * position2[9])) + (position1[15] * position2[13]);
-        position[14] = (((position1[12] * position2[2]) + (position1[13] * position2[6])) + (position1[14] * position2[10])) + (position1[15] * position2[14]);
-        position[15] = (((position1[12] * position2[3]) + (position1[13] * position2[7])) + (position1[14] * position2[11])) + (position1[15] * position2[15]);
+        matrix[0] = (((matrix1[0] * matrix2[0]) + (matrix1[1] * matrix2[4])) + (matrix1[2] * matrix2[8])) + (matrix1[3] * matrix2[12]);
+        matrix[1] = (((matrix1[0] * matrix2[1]) + (matrix1[1] * matrix2[5])) + (matrix1[2] * matrix2[9])) + (matrix1[3] * matrix2[13]);
+        matrix[2] = (((matrix1[0] * matrix2[2]) + (matrix1[1] * matrix2[6])) + (matrix1[2] * matrix2[10])) + (matrix1[3] * matrix2[14]);
+        matrix[3] = (((matrix1[0] * matrix2[3]) + (matrix1[1] * matrix2[7])) + (matrix1[2] * matrix2[11])) + (matrix1[3] * matrix2[15]);
+        matrix[4] = (((matrix1[4] * matrix2[0]) + (matrix1[5] * matrix2[4])) + (matrix1[6] * matrix2[8])) + (matrix1[7] * matrix2[12]);
+        matrix[5] = (((matrix1[4] * matrix2[1]) + (matrix1[5] * matrix2[5])) + (matrix1[6] * matrix2[9])) + (matrix1[7] * matrix2[13]);
+        matrix[6] = (((matrix1[4] * matrix2[2]) + (matrix1[5] * matrix2[6])) + (matrix1[6] * matrix2[10])) + (matrix1[7] * matrix2[14]);
+        matrix[7] = (((matrix1[4] * matrix2[3]) + (matrix1[5] * matrix2[7])) + (matrix1[6] * matrix2[11])) + (matrix1[7] * matrix2[15]);
+        matrix[8] = (((matrix1[8] * matrix2[0]) + (matrix1[9] * matrix2[4])) + (matrix1[10] * matrix2[8])) + (matrix1[11] * matrix2[12]);
+        matrix[9] = (((matrix1[8] * matrix2[1]) + (matrix1[9] * matrix2[5])) + (matrix1[10] * matrix2[9])) + (matrix1[11] * matrix2[13]);
+        matrix[10] = (((matrix1[8] * matrix2[2]) + (matrix1[9] * matrix2[6])) + (matrix1[10] * matrix2[10])) + (matrix1[11] * matrix2[14]);
+        matrix[11] = (((matrix1[8] * matrix2[3]) + (matrix1[9] * matrix2[7])) + (matrix1[10] * matrix2[11])) + (matrix1[11] * matrix2[15]);
+        matrix[12] = (((matrix1[12] * matrix2[0]) + (matrix1[13] * matrix2[4])) + (matrix1[14] * matrix2[8])) + (matrix1[15] * matrix2[12]);
+        matrix[13] = (((matrix1[12] * matrix2[1]) + (matrix1[13] * matrix2[5])) + (matrix1[14] * matrix2[9])) + (matrix1[15] * matrix2[13]);
+        matrix[14] = (((matrix1[12] * matrix2[2]) + (matrix1[13] * matrix2[6])) + (matrix1[14] * matrix2[10])) + (matrix1[15] * matrix2[14]);
+        matrix[15] = (((matrix1[12] * matrix2[3]) + (matrix1[13] * matrix2[7])) + (matrix1[14] * matrix2[11])) + (matrix1[15] * matrix2[15]);
         return matrix;
     },
 
@@ -377,11 +386,11 @@ var WaveEngineJS = {
         var vy = pos[1];
         var vz = pos[2];
         var vw = pos[3];
-        var p = worldviewproj.position;
-        var x1 = (((vx * p[0]) + (vy * p[4])) + (vz * p[8])) + (vw * p[12]);
-        var y1 = (((vx * p[1]) + (vy * p[5])) + (vz * p[9])) + (vw * p[13]);
-        var z1 = (((vx * p[2]) + (vy * p[6])) + (vz * p[10])) + (vw * p[14]);
-        var w1 = (((vx * p[3]) + (vy * p[7])) + (vz * p[11])) + (vw * p[15]);
+
+        var x1 = (((vx * worldviewproj[0]) + (vy * worldviewproj[4])) + (vz * worldviewproj[8])) + (vw * worldviewproj[12]);
+        var y1 = (((vx * worldviewproj[1]) + (vy * worldviewproj[5])) + (vz * worldviewproj[9])) + (vw * worldviewproj[13]);
+        var z1 = (((vx * worldviewproj[2]) + (vy * worldviewproj[6])) + (vz * worldviewproj[10])) + (vw * worldviewproj[14]);
+        var w1 = (((vx * worldviewproj[3]) + (vy * worldviewproj[7])) + (vz * worldviewproj[11])) + (vw * worldviewproj[15]);
         var position = [x1, y1, z1, w1];
 
         var x = position[0];
@@ -519,13 +528,12 @@ var WaveEngineJS = {
      * @return {Array}
      */
     transformV3Matrix:function (position, matrix) {
-        var p = matrix.position;
         var x = position[0];
         var y = position[1];
         var z = position[2];
-        var num3 = (((x * p[0]) + (y * p[4])) + (z * p[8])) + p[12];
-        var num2 = (((x * p[1]) + (y * p[5])) + (z * p[9])) + p[13];
-        var num = (((x * p[2]) + (y * p[6])) + (z * p[10])) + p[14];
+        var num3 = (((x * matrix[0]) + (y * matrix[4])) + (z * matrix[8])) + matrix[12];
+        var num2 = (((x * matrix[1]) + (y * matrix[5])) + (z * matrix[9])) + matrix[13];
+        var num = (((x * matrix[2]) + (y * matrix[6])) + (z * matrix[10])) + matrix[14];
         return [num3, num2, num];
     },
 
@@ -540,11 +548,10 @@ var WaveEngineJS = {
         var vy = vector[1];
         var vz = vector[2];
         var vw = vector[3];
-        var p = matrix.position;
-        var x = (((vx * p[0]) + (vy * p[4])) + (vz * p[8])) + (vw * p[12]);
-        var y = (((vx * p[1]) + (vy * p[5])) + (vz * p[9])) + (vw * p[13]);
-        var z = (((vx * p[2]) + (vy * p[6])) + (vz * p[10])) + (vw * p[14]);
-        var w = (((vx * p[3]) + (vy * p[7])) + (vz * p[11])) + (vw * p[15]);
+        var x = (((vx * matrix[0]) + (vy * matrix[4])) + (vz * matrix[8])) + (vw * matrix[12]);
+        var y = (((vx * matrix[1]) + (vy * matrix[5])) + (vz * matrix[9])) + (vw * matrix[13]);
+        var z = (((vx * matrix[2]) + (vy * matrix[6])) + (vz * matrix[10])) + (vw * matrix[14]);
+        var w = (((vx * matrix[3]) + (vy * matrix[7])) + (vz * matrix[11])) + (vw * matrix[15]);
         return [x, y, z, w];
     },
 
@@ -621,23 +628,22 @@ var WaveEngineJS = {
         num = quaternion[0] * quaternion[3];
 
         var matrix = new WaveEngineJS.Matrix();
-        var position = matrix.position;
-        position[0] = 1 - (2 * (num8 + num7));
-        position[1] = 2 * (num6 + num5);
-        position[2] = 2 * (num4 - num3);
-        position[3] = 0;
-        position[4] = 2 * (num6 - num5);
-        position[5] = 1 - (2 * (num7 + num9));
-        position[6] = 2 * (num2 + num);
-        position[7] = 0;
-        position[8] = 2 * (num4 + num3);
-        position[9] = 2 * (num2 - num);
-        position[10] = 1 - (2 * (num8 + num9));
-        position[11] = 0;
-        position[12] = 0;
-        position[13] = 0;
-        position[14] = 0;
-        position[15] = 1;
+        matrix[0] = 1 - (2 * (num8 + num7));
+        matrix[1] = 2 * (num6 + num5);
+        matrix[2] = 2 * (num4 - num3);
+        matrix[3] = 0;
+        matrix[4] = 2 * (num6 - num5);
+        matrix[5] = 1 - (2 * (num7 + num9));
+        matrix[6] = 2 * (num2 + num);
+        matrix[7] = 0;
+        matrix[8] = 2 * (num4 + num3);
+        matrix[9] = 2 * (num2 - num);
+        matrix[10] = 1 - (2 * (num8 + num9));
+        matrix[11] = 0;
+        matrix[12] = 0;
+        matrix[13] = 0;
+        matrix[14] = 0;
+        matrix[15] = 1;
         return matrix;
     },
 
@@ -881,8 +887,7 @@ var WaveEngineJS = {
             source[2] = (source[2] - minz) / (maxz - minz);
             var vector = WaveEngineJS.transformV3Matrix(source, matrix);
             var vector4 = [vector[0], vector[1], vector[2], 1];
-            var position = matrix.position;
-            var a = (((source[0] * position[3]) + (source[1] * position[7])) + (source[2] * position[11])) + position[15];
+            var a = (((source[0] * matrix[3]) + (source[1] * matrix[7])) + (source[2] * matrix[11])) + matrix[15];
             if (!that.withinEpsilon(a, 1)) {
                 WaveEngineJS.divide(vector4, a);
             }
@@ -1030,8 +1035,8 @@ var WaveEngineJS = {
             source[2] = (source[2] - minz) / (maxz - minz);
             var vector = WaveEngineJS.transformV3Matrix(source, matrix);
             var vector4 = [vector[0], vector[1], vector[2], 1];
-            var position = matrix.position;
-            var a = (((source[0] * position[3]) + (source[1] * position[7])) + (source[2] * position[11])) + position[15];
+
+            var a = (((source[0] * matrix[3]) + (source[1] * matrix[7])) + (source[2] * matrix[11])) + matrix[15];
             if (!that.withinEpsilon(a, 1)) {
                 WaveEngineJS.divide(vector4, a);
             }
@@ -1181,7 +1186,10 @@ var WaveEngineJS = {
      * @constructor
      */
     Point3D:function (x, y, z) {
-        this.v3D = [x, y, z, 1];
+        this[0] = x;
+        this[1] = y;
+        this[2] = z;
+        this[3] = 1;
     },
 
     /**
@@ -1632,7 +1640,7 @@ var WaveEngineJS = {
                 var vertices = new Array();
                 var ll = model.vertices.length;
                 for (var j = 0; j < ll; j++) {
-                    vertices[j] = WaveEngineJS.transformV4Matrix(model.vertices[j].v3D, model.world);
+                    vertices[j] = WaveEngineJS.transformV4Matrix(model.vertices[j], model.world);
                 }
 
                 model.refreshBoundingBox(vertices);
@@ -1671,7 +1679,7 @@ var WaveEngineJS = {
                     var model = models[k];
                     var vertices = new Array();
                     for (var j = 0; j < model.vertices.length; j++) {
-                        vertices[j] = WaveEngineJS.transformV4Matrix(model.vertices[j].v3D, model.world);
+                        vertices[j] = WaveEngineJS.transformV4Matrix(model.vertices[j], model.world);
                         totalVertices[totalVertices.length] = vertices[j];
                     }
                     modelsVertices[k] = vertices;
