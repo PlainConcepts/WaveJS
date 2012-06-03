@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ray Casting</title>
+    <script type="text/javascript" src="../js/lib/requestanimationframe.js"></script>
+    <script type="text/javascript" src="../js/lib/wave.js"></script>
+    <script type="text/javascript" src="../models/cube.js"></script>
+    <script type="text/javascript" src="../models/cube1.js"></script>
+    <script type="text/javascript" src="../models/cube2.js"></script>
+    <script type="text/javascript" src="../models/cube3.js"></script>
+    <script type="text/javascript">
+        "use strict"
+        function onLoad(){
+            var canvas = document.getElementById("canvas");
+            //Create scene
+            var scene = new WaveEngineJS.Scene(canvas);
+            //Create Camera
+            var camera = new WaveEngineJS.Camera(canvas.width, canvas.height);
+            //Create Group Models
+            var group1 = new WaveEngineJS.groupModel("1");
+            var group2 = new WaveEngineJS.groupModel("2");
+            var group3 = new WaveEngineJS.groupModel("3");
+            //Create Cubes
+            var cubeW1 = GetCube();
+            var cubeW2 = GetCube();
+            var cubeW3 = GetCube();
+
+            //Add camera to scene
+            scene.addCamera(camera);
+
+            //Setting camera
+            camera.changeCameraPosition([100, 17, 300]);
+
+            //Configure Models Colors
+            cubeW1.changeColor([8, 73, 79, 0.5], [91, 150, 164, 0.55]);
+            cubeW2.changeColor([8, 73, 79, 0.5], [91, 150, 164, 0.55]);
+            cubeW3.changeColor([8, 73, 79, 0.5], [91, 150, 164, 0.55]);
+            cube1.changeColor([255,255,255,1], [255,255,255,1]);
+            cube2.changeColor([255,255,255,1], [255,255,255,1]);
+            cube3.changeColor([255,255,255,1], [255,255,255,1]);
+
+            //Add Numbers models to each cube
+            group1.addModel(cubeW1);
+            group1.addModel(cube1);
+            group2.addModel(cubeW2);
+            group2.addModel(cube2);
+            group3.addModel(cubeW3);
+            group3.addModel(cube3);
+
+            //Desactivate backfaceCulling to each cube
+            cubeW1.backfaceCulling = false;
+            cubeW2.backfaceCulling = false;
+            cubeW3.backfaceCulling = false;
+
+            //Setting group model positions
+            group1.changePosition(0,0,0);
+            group2.changePosition(10, 10, -45);
+            group3.changePosition(-10, -10, 45);
+
+            //Add Group Models to scene
+            scene.addGroupModel(group1);
+            scene.addGroupModel(group2);
+            scene.addGroupModel(group3);
+
+            scene.render(scene.SOLID);
+
+            canvas.addEventListener("click", onClick, false);
+
+
+            function onClick(event){
+                var x;
+                var y;
+                var groupModel;
+                var selectedCube = document.getElementById("selectedCube");
+                //Get X and Y position
+                if(typeof event.offsetX == "undefined"){ //mozilla
+                    x = event.layerX - event.originalTarget.offsetLeft;
+                    y = event.layerY - event.originalTarget.offsetTop;
+                }else{ //other browser
+                    x = event.offsetX;
+                    y = event.offsetY;
+                }
+
+                groupModel = scene.getGroupModelInMap([x, y]);
+
+                if(groupModel == null){
+                    selectedCube.textContent = "-";
+                }else{
+                    selectedCube.textContent = groupModel.id;
+                }
+            }
+        }
+    </script>
+</head>
+<body onload="onLoad();">
+    <canvas id="canvas" width="500" height="500">
+        Canvas No Soportado.
+    </canvas>
+    <p>Cubo seleccionado: <span id="selectedCube">-</span> </p>
+</body>
+</html>
