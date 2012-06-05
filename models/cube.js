@@ -1,4 +1,4 @@
-function GetCube() {
+function getCube() {
     var puzzlecube = new WaveEngineJS.Model();
     puzzlecube.addVertex(39.3701, -39.3701, 39.3701);
     puzzlecube.addVertex(39.3701, 39.3701, 39.3701);

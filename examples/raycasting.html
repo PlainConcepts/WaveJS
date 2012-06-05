@@ -21,9 +21,9 @@
             var group2 = new WaveEngineJS.groupModel("2");
             var group3 = new WaveEngineJS.groupModel("3");
             //Create Cubes
-            var cubeW1 = GetCube();
-            var cubeW2 = GetCube();
-            var cubeW3 = GetCube();
+            var cubeW1 = getCube();
+            var cubeW2 = getCube();
+            var cubeW3 = getCube();
 
             //Add camera to scene
             scene.addCamera(camera);
@@ -94,8 +94,8 @@
 </head>
 <body onload="onLoad();">
     <canvas id="canvas" width="500" height="500">
-        Canvas No Soportado.
+        Canvas is not supported :(
     </canvas>
-    <p>Cubo seleccionado: <span id="selectedCube">-</span> </p>
+    <p>You've clicked over: <span id="selectedCube">-</span> </p>
 </body>
 </html>
